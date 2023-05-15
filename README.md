@@ -8,6 +8,13 @@ _PTI09420 -Projekt Softwaretechnologie SoSe23- Westsächsische Hoschule Zwickau_
 - Christian Spitzer    
 
 ## Inhalt
+- Domain Storytelling 
+- Event Storming mit Bounded Context
+- Context Map
+- Event Modelling
+- Core Domains
+- Aggregates
+- Specification By Example - Use Cases
 
 ## Domain Storytelling 
 ![Domain Storytelling für Fahrrad-Website - Meilenstein 1](https://media.github.fh-zwickau.de/user/96/files/a56772d6-8514-47c9-b0b8-c48e59e21c39)
