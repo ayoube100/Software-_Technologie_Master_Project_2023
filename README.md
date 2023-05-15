@@ -35,6 +35,7 @@ _PTI09420 -Projekt Softwaretechnologie SoSe23- Westsächsische Hoschule Zwickau_
 ![Fahrrad_Website_Context_Map](https://media.github.fh-zwickau.de/user/96/files/3365b292-4b58-423e-bad2-ff4366926761)   
 
 ## Event Modelling
+![EventModelling](https://media.github.fh-zwickau.de/user/96/files/07b5718f-6d55-43f7-ac2e-fae0fda78525)
 
 ## Core Domains
 
