@@ -12,7 +12,7 @@ public class ProduktModel {
     private beschreibungType Beschreibung;
     private preisType preis;
     private KategorieEnum kategorie;
-    private verfuegbarkeitType verfügbarkeit;
+    private verfuegbarkeitType verfuegbarkeit;
 
 
 }
