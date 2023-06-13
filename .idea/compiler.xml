@@ -8,16 +8,22 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
-        <module name="katalog" />
         <module name="bestellung" />
+        <module name="Katalog" />
         <module name="discovery-server" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="catalog" target="17" />
+      <module name="katalog" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Katalog" options="-parameters" />
       <module name="api-gateway" options="-parameters" />
       <module name="bestellung" options="-parameters" />
+      <module name="catalog" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="katalog" options="-parameters" />
     </option>
