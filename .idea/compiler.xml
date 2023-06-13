@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
         <module name="katalog" />
+        <module name="bestellung" />
         <module name="discovery-server" />
       </profile>
     </annotationProcessing>
@@ -16,6 +17,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway" options="-parameters" />
+      <module name="bestellung" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="katalog" options="-parameters" />
     </option>
