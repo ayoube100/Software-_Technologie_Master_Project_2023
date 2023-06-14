@@ -28,8 +28,8 @@ public class ProduktProjection {
 
 
         );
-        //Save the produkt in the DB normally we can only use save method but it is not working.
-        this.produktRepository.saveAndFlush(produkt);
+
+        this.produktRepository.save(produkt);
 
 
 

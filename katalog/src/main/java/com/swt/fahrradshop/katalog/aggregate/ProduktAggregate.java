@@ -2,6 +2,7 @@ package com.swt.fahrradshop.katalog.aggregate;
 
 import com.swt.fahrradshop.katalog.command.CreateProduktCommand;
 import com.swt.fahrradshop.katalog.event.ProduktCreatedEvent;
+import com.swt.fahrradshop.katalog.valueObject.KategorieEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,8 @@ public class ProduktAggregate {
     private UUID id;
     private String Name;
     private BigDecimal Price;
+    private KategorieEnum Kategorie;
+
 
 
     @CommandHandler
