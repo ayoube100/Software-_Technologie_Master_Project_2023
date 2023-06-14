@@ -6,15 +6,16 @@ import com.swt.fahrradshop.bestellung.valueObject.BestellungsstatusEnum;
 import com.swt.fahrradshop.bestellung.valueObject.EinzelpostenValueObject;
 import com.swt.fahrradshop.bestellung.valueObject.KundenIdValueObject;
 import com.swt.fahrradshop.bestellung.valueObject.ZahlungValueObject;
+import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
-import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import java.util.List;
 
+@Slf4j
 @Aggregate
 public class BestellungAggregate {
 
@@ -23,7 +24,7 @@ public class BestellungAggregate {
     private BestellungsstatusEnum bestellungsstatus;
     private List<EinzelpostenValueObject> einzelposten;
     private KundenIdValueObject kundenIdValueObject;
-    private ZahlungValueObject zahlung;
+    private ZahlungValueObject zahlungValueObject;
     public BestellungAggregate() {
     }
     @CommandHandler
@@ -35,7 +36,7 @@ public class BestellungAggregate {
                 .bestellungsstatus(cmd.getBestellungsstatus())
                 .einzelposten(cmd.getEinzelposten())
                 .kundenIdValueObject(cmd.getKundenIdValueObject())
-                .zahlung(cmd.getZahlung())
+                .zahlungValueObject(cmd.getZahlungValueObject())
                 .build();
 
         AggregateLifecycle.apply(evt);
@@ -47,6 +48,6 @@ public class BestellungAggregate {
         this.bestellungsstatus = evt.getBestellungsstatus();
         this.einzelposten = evt.getEinzelposten();
         this.kundenIdValueObject= evt.getKundenIdValueObject();
-        this.zahlung = evt.getZahlung();
+        this.zahlungValueObject = evt.getZahlungValueObject();
     }
 }

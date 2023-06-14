@@ -20,5 +20,5 @@ public class CreateBestellungCommand {
     private final BestellungsstatusEnum bestellungsstatus;
     private final List<EinzelpostenValueObject> einzelposten;
     private final KundenIdValueObject kundenIdValueObject;
-    private final ZahlungValueObject zahlung;
+    private final ZahlungValueObject zahlungValueObject;
 }

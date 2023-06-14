@@ -15,9 +15,9 @@ import java.util.List;
 public class BestellungCreatedEvent {
 
     @TargetAggregateIdentifier
-    private String bestellungId;
-    private BestellungsstatusEnum bestellungsstatus;
-    private List<EinzelpostenValueObject> einzelposten;
-    private KundenIdValueObject kundenIdValueObject;
-    private ZahlungValueObject zahlung;
+    private  String bestellungId;
+    private  BestellungsstatusEnum bestellungsstatus;
+    private  List<EinzelpostenValueObject> einzelposten;
+    private  KundenIdValueObject kundenIdValueObject;
+    private  ZahlungValueObject zahlungValueObject;
 }
