@@ -16,9 +16,8 @@ import java.util.List;
 public class CreateBestellungCommand {
     //final because it's a read only class
     @TargetAggregateIdentifier
-    private final String bestellungId;
-    private final BestellungsstatusEnum bestellungsstatus;
-    private final List<EinzelpostenValueObject> einzelposten;
+    private  final String bestellungId;
+    
+    private  final BestellungsstatusEnum bestellungsstatusEnum;
     private final KundenIdValueObject kundenIdValueObject;
-    private final ZahlungValueObject zahlungValueObject;
 }
