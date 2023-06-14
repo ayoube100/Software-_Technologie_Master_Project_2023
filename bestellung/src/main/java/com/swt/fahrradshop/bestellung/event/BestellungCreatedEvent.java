@@ -1,16 +1,11 @@
 package com.swt.fahrradshop.bestellung.event;
 
-import com.swt.fahrradshop.bestellung.valueObject.BestellungsstatusEnum;
-import com.swt.fahrradshop.bestellung.valueObject.EinzelpostenValueObject;
-import com.swt.fahrradshop.bestellung.valueObject.KundenIdValueObject;
-import com.swt.fahrradshop.bestellung.valueObject.ZahlungValueObject;
+import com.swt.fahrradshop.bestellung.valueObject.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.axonframework.modelling.command.TargetAggregateIdentifier;
-
-import java.util.List;
+import java.math.BigDecimal;
 
 @Data
 @Builder
@@ -21,4 +16,6 @@ public class BestellungCreatedEvent {
     private  String bestellungId;
     private  BestellungsstatusEnum bestellungsstatus;
     private  KundenIdValueObject kundenIdValueObject;
+    private String warenkorbId;
+    private BigDecimal gesamtpreis;
 }

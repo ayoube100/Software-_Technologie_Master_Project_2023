@@ -1,7 +1,6 @@
 package com.swt.fahrradshop.bestellung.projection;
 
 import com.swt.fahrradshop.bestellung.entity.BestellungEntity;
-import org.springframework.beans.BeanUtils;
 import com.swt.fahrradshop.bestellung.event.BestellungCreatedEvent;
 import com.swt.fahrradshop.bestellung.repository.BestellungRepository;
 import org.axonframework.eventhandling.EventHandler;
@@ -18,6 +17,8 @@ public class BestellungProjection {
         this.bestellungRepository = bestellungRepository;
     }
 
+
+    //triggered when Event is dispatched
     @EventHandler
     public void on(BestellungCreatedEvent evt) throws Exception{
 
@@ -26,9 +27,13 @@ public class BestellungProjection {
         BestellungEntity bestellung = new BestellungEntity(
                 evt.getBestellungId(),
                 evt.getBestellungsstatus().toString(),
-                evt.getKundenIdValueObject()
+                evt.getKundenIdValueObject(),
+                evt.getWarenkorbId(),
+                evt.getGesamtpreis()
         );
 
+
+        //save the created entity in DB
         bestellungRepository.save(bestellung);
     }
 

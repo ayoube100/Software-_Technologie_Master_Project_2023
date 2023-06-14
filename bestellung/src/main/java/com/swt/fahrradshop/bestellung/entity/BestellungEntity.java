@@ -1,14 +1,12 @@
 package com.swt.fahrradshop.bestellung.entity;
 
-import com.swt.fahrradshop.bestellung.valueObject.BestellungsstatusEnum;
-import com.swt.fahrradshop.bestellung.valueObject.EinzelpostenValueObject;
-import com.swt.fahrradshop.bestellung.valueObject.KundenIdValueObject;
-import com.swt.fahrradshop.bestellung.valueObject.ZahlungValueObject;
+import com.swt.fahrradshop.bestellung.valueObject.*;
 import lombok.*;
 
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,5 +20,6 @@ public class BestellungEntity  {
     private String bestellungsstatusEnum;
 
     private KundenIdValueObject kundenIdValueObject;
-
+    private String warenkorbId;
+    private BigDecimal gesamtpreis;
 }

@@ -1,7 +1,6 @@
 package com.swt.fahrradshop.bestellung.rest;
 
 import com.swt.fahrradshop.bestellung.command.CreateBestellungCommand;
-import com.swt.fahrradshop.bestellung.entity.BestellungEntity;
 import com.swt.fahrradshop.bestellung.model.BestellungModel;
 import com.swt.fahrradshop.bestellung.valueObject.BestellungsstatusEnum;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -19,19 +18,21 @@ public class BestellungController {
 
     @PostMapping("/bestellung/create")
     public String createBestellung (@RequestBody BestellungModel bestellung){
-
+        //put payload coming from Frontend in Command
         CreateBestellungCommand cmd = CreateBestellungCommand.builder()
                 .bestellungId(UUID.randomUUID().toString())
-               .bestellungsstatusEnum(BestellungsstatusEnum.ERSTELLT)
+                .bestellungsstatusEnum(BestellungsstatusEnum.ERSTELLT)
                 .kundenIdValueObject(bestellung.getKundenIdValueObject())
+                .warenkorbId(bestellung.getWarenkorbId())
+                .gesamtpreis(bestellung.getGesamtpreis())
                 .build();
 
         String returnedValue;
         try{
+            //send command to gateway and trigger CommandHandler
             commandGateway.send(cmd);
-            returnedValue = cmd.getBestellungId() + "\n " + cmd.getBestellungsstatusEnum().toString() +"\n"+
-                    cmd.getBestellungsstatusEnum() +"\n"+
-                 cmd.getKundenIdValueObject() +"\n";
+            returnedValue = cmd.getBestellungId() + "\n " + cmd.getBestellungsstatusEnum().toString() +"\n"+ cmd.getKundenIdValueObject() +"\n"+
+                    cmd.getWarenkorbId() +"\n"+ cmd.getGesamtpreis() +"\n";
         }catch(Exception e){
              returnedValue = "error";
         }
