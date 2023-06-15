@@ -19,7 +19,7 @@ public class BestellungEntity  {
 
     private String bestellungsstatusEnum;
 
-    private KundenIdValueObject kundenIdValueObject;
+    private KundeIdValueObject kundeIdValueObject;
     private String warenkorbId;
     private BigDecimal gesamtpreis;
 }

@@ -17,7 +17,7 @@ public class BestellungAggregate {
     @AggregateIdentifier
     private String bestellungId;
     private BestellungsstatusEnum bestellungsstatusEnum;
-    private KundenIdValueObject kundenIdValueObject;
+    private KundeIdValueObject kundeIdValueObject;
 
     private String warenkorbId;
     private BigDecimal gesamtpreis;
@@ -32,7 +32,7 @@ public class BestellungAggregate {
         BestellungCreatedEvent evt = BestellungCreatedEvent.builder()
                 .bestellungId(cmd.getBestellungId())
                 .bestellungsstatus(cmd.getBestellungsstatusEnum())
-                .kundenIdValueObject(cmd.getKundenIdValueObject())
+                .kundeIdValueObject(cmd.getKundeIdValueObject())
                 .warenkorbId(cmd.getWarenkorbId())
                 .gesamtpreis(cmd.getGesamtpreis())
                 .build();
@@ -41,12 +41,12 @@ public class BestellungAggregate {
         AggregateLifecycle.apply(evt);
     }
 
-    //triggered when event dispatched
+    //triggered when event dispatched => actualize the state of the aggregate
     @EventSourcingHandler
     public void on(BestellungCreatedEvent evt) throws Exception{
         this.bestellungId= evt.getBestellungId();
         this.bestellungsstatusEnum = evt.getBestellungsstatus();
-        this.kundenIdValueObject= evt.getKundenIdValueObject();
+        this.kundeIdValueObject = evt.getKundeIdValueObject();
         this.warenkorbId = evt.getWarenkorbId();
         this.gesamtpreis= evt.getGesamtpreis();
     }

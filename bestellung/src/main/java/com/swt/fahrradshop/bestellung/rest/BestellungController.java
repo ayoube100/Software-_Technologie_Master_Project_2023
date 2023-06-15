@@ -22,7 +22,7 @@ public class BestellungController {
         CreateBestellungCommand cmd = CreateBestellungCommand.builder()
                 .bestellungId(UUID.randomUUID().toString())
                 .bestellungsstatusEnum(BestellungsstatusEnum.ERSTELLT)
-                .kundenIdValueObject(bestellung.getKundenIdValueObject())
+                .kundeIdValueObject(bestellung.getKundeIdValueObject())
                 .warenkorbId(bestellung.getWarenkorbId())
                 .gesamtpreis(bestellung.getGesamtpreis())
                 .build();
@@ -31,7 +31,7 @@ public class BestellungController {
         try{
             //send command to gateway and trigger CommandHandler
             commandGateway.send(cmd);
-            returnedValue = cmd.getBestellungId() + "\n " + cmd.getBestellungsstatusEnum().toString() +"\n"+ cmd.getKundenIdValueObject() +"\n"+
+            returnedValue = cmd.getBestellungId() + "\n " + cmd.getBestellungsstatusEnum().toString() +"\n"+ cmd.getKundeIdValueObject() +"\n"+
                     cmd.getWarenkorbId() +"\n"+ cmd.getGesamtpreis() +"\n";
         }catch(Exception e){
              returnedValue = "error";

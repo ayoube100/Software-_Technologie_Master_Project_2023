@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 //CRUD operation into DB
 public class BestellungProjection {
 
-
     private final BestellungRepository bestellungRepository;
 
     public BestellungProjection(BestellungRepository bestellungRepository) {
@@ -27,7 +26,7 @@ public class BestellungProjection {
         BestellungEntity bestellung = new BestellungEntity(
                 evt.getBestellungId(),
                 evt.getBestellungsstatus().toString(),
-                evt.getKundenIdValueObject(),
+                evt.getKundeIdValueObject(),
                 evt.getWarenkorbId(),
                 evt.getGesamtpreis()
         );

@@ -16,8 +16,8 @@ public class CreateBestellungCommand {
     private  final String bestellungId;
     
     private  final BestellungsstatusEnum bestellungsstatusEnum;
-    private final KundenIdValueObject kundenIdValueObject;
-    private String warenkorbId;
-    private BigDecimal gesamtpreis;
+    private final KundeIdValueObject kundeIdValueObject;
+    private final String warenkorbId;
+    private final BigDecimal gesamtpreis;
 
 }
