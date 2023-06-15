@@ -10,6 +10,7 @@
         <module name="api-gateway" />
         <module name="katalog" />
         <module name="discovery-server" />
+        <module name="logistik" />
       </profile>
     </annotationProcessing>
   </component>
@@ -18,6 +19,7 @@
       <module name="api-gateway" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="katalog" options="-parameters" />
+      <module name="logistik" options="-parameters" />
     </option>
   </component>
 </project>
