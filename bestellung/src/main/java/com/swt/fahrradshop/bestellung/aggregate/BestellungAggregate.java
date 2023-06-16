@@ -2,12 +2,13 @@ package com.swt.fahrradshop.bestellung.aggregate;
 
 import com.swt.fahrradshop.bestellung.command.CancelBestellungCommand;
 import com.swt.fahrradshop.bestellung.command.CreateBestellungCommand;
+import com.swt.fahrradshop.bestellung.command.UpdatePayedOrSentBestellungCommand;
 import com.swt.fahrradshop.bestellung.event.BestellungCanceledEvent;
 import com.swt.fahrradshop.bestellung.event.BestellungCreatedEvent;
+import com.swt.fahrradshop.bestellung.event.PayedOrSentBestellungUpdatedEvent;
 import com.swt.fahrradshop.bestellung.valueObject.*;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
-import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
@@ -50,7 +51,21 @@ public class BestellungAggregate {
      **/
     @CommandHandler
     public void handle(CancelBestellungCommand cmd) {
+
         apply(new BestellungCanceledEvent(cmd.getBestellungId()));
+    }
+
+    @CommandHandler
+    public void handle(UpdatePayedOrSentBestellungCommand cmd){
+        if(this.bestellungsstatusEnum.toString().equals("ERSTELLT"))
+        apply(new PayedOrSentBestellungUpdatedEvent(
+                cmd.getBestellungId(),
+                BestellungsstatusEnum.IN_BEARBEITUNG));
+        else {
+            apply(new PayedOrSentBestellungUpdatedEvent(
+                    cmd.getBestellungId(),
+                    BestellungsstatusEnum.ABGESCHLOSSEN));
+        }
     }
 
     //triggered when event dispatched => actualize the state of the aggregate
@@ -66,5 +81,11 @@ public class BestellungAggregate {
     @EventSourcingHandler
     public void on(BestellungCanceledEvent evt) {
         markDeleted();
+    }
+
+    @EventSourcingHandler
+    public void on(PayedOrSentBestellungUpdatedEvent evt){
+        this.bestellungId = evt.getBestellungId();
+        this.bestellungsstatusEnum = evt.getBestellungsstatusEnum();
     }
 }

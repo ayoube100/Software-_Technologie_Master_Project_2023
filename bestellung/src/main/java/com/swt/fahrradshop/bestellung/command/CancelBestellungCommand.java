@@ -1,5 +1,4 @@
 package com.swt.fahrradshop.bestellung.command;
-import com.swt.fahrradshop.bestellung.valueObject.*;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

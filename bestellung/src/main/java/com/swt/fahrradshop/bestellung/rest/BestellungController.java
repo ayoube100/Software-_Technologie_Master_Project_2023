@@ -2,6 +2,7 @@ package com.swt.fahrradshop.bestellung.rest;
 
 import com.swt.fahrradshop.bestellung.command.CancelBestellungCommand;
 import com.swt.fahrradshop.bestellung.command.CreateBestellungCommand;
+import com.swt.fahrradshop.bestellung.command.UpdatePayedOrSentBestellungCommand;
 import com.swt.fahrradshop.bestellung.model.BestellungModel;
 import com.swt.fahrradshop.bestellung.valueObject.BestellungsstatusEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-@RestController
+@RestController("/bestellung")
 @Slf4j
 public class BestellungController {
 
@@ -20,7 +21,7 @@ public class BestellungController {
         this.commandGateway = cmd;
     }
 
-    @PostMapping("/bestellung/create")
+    @PostMapping("/create")
     public String createBestellung (@RequestBody BestellungModel bestellung){
         //put payload coming from Frontend in Command
         CreateBestellungCommand cmd = CreateBestellungCommand.builder()
@@ -42,10 +43,23 @@ public class BestellungController {
         }
         return returnedValue ;
     }
-    @DeleteMapping("/bestellung/cancel/{bestellungId}")
+    @DeleteMapping("/cancel/{bestellungId}")
     public CompletableFuture<String> cancelBestellung(@PathVariable String bestellungId){
-        CancelBestellungCommand cancelBestellungCommand = CancelBestellungCommand.builder().bestellungId(bestellungId).build();
-        return commandGateway.send(cancelBestellungCommand);
+        CancelBestellungCommand cmd = CancelBestellungCommand.builder().bestellungId(bestellungId).build();
+        return commandGateway.send(cmd);
     }
 
+    // we should speficy how it would be changed = the status
+
+    @PutMapping("/payed/{bestellungId}")
+    public CompletableFuture<String> updatePayedBestellungStatus(@PathVariable String bestellungId){
+        UpdatePayedOrSentBestellungCommand cmd = UpdatePayedOrSentBestellungCommand.builder().bestellungId(bestellungId).build();
+        return commandGateway.send(cmd);
+    }
+
+    @PutMapping("/sent/{bestellungId}")
+    public CompletableFuture<String> updateSentBestellungStatus(@PathVariable String bestellungId){
+        UpdatePayedOrSentBestellungCommand cmd = UpdatePayedOrSentBestellungCommand.builder().bestellungId(bestellungId).build();
+        return commandGateway.send(cmd);
+    }
 }

@@ -3,14 +3,11 @@ package com.swt.fahrradshop.bestellung.projection;
 import com.swt.fahrradshop.bestellung.entity.BestellungEntity;
 import com.swt.fahrradshop.bestellung.event.BestellungCanceledEvent;
 import com.swt.fahrradshop.bestellung.event.BestellungCreatedEvent;
+import com.swt.fahrradshop.bestellung.event.PayedOrSentBestellungUpdatedEvent;
 import com.swt.fahrradshop.bestellung.repository.BestellungRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.eventhandling.EventHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 
 @Component
 @Slf4j
@@ -45,6 +42,12 @@ public class BestellungProjection {
     @EventHandler
     public void on(BestellungCanceledEvent evt) throws Exception {
         bestellungRepository.deleteById(evt.getBestellungId());
+    }
+
+    @EventHandler
+    public void on(PayedOrSentBestellungUpdatedEvent evt){
+       BestellungEntity bestellung =  bestellungRepository.findByBestellungId(evt.getBestellungId());
+        bestellung.setBestellungsstatus(evt.getBestellungsstatusEnum().toString());
     }
 
 }
