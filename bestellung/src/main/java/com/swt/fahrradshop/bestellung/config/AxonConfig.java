@@ -8,14 +8,5 @@ import org.springframework.context.annotation.Configuration;
 public class AxonConfig
 {
 
-    @Bean
-    public XStream xStream()
-    {
-        XStream xStream = new XStream();
 
-        xStream.allowTypesByWildcard(new String[]{
-                " com.swt.fahrradshop.bestellung.**"
-        });
-        return xStream;
-    }
 }

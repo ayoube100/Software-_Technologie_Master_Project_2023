@@ -4,8 +4,6 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-
 import java.math.BigDecimal;
 @Data
 @Builder
@@ -15,8 +13,8 @@ public class CreateBestellungCommand {
     @TargetAggregateIdentifier
     private  final String bestellungId;
     
-    private  final BestellungsstatusEnum bestellungsstatusEnum;
-    private final KundeIdValueObject kundeIdValueObject;
+    private  final BestellungsstatusEnum bestellungsstatus;
+    private final String kundeId;
     private final String warenkorbId;
     private final BigDecimal gesamtpreis;
 

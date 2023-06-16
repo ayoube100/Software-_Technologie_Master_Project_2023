@@ -17,9 +17,9 @@ public class BestellungEntity  {
     @Id
     private String bestellungId;
 
-    private String bestellungsstatusEnum;
+    private String bestellungsstatus;
 
-    private KundeIdValueObject kundeIdValueObject;
+    private String kundeId;
     private String warenkorbId;
     private BigDecimal gesamtpreis;
 }

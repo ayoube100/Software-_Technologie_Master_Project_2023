@@ -22,7 +22,7 @@ public class WarenkorbAggregate {
     private List<Produkt> produkteList;
     private BigDecimal gesamtpreis;
 
-    //creats the CreateWarenkorbCommand bean
+    //creates the CreateWarenkorbCommand bean
     public WarenkorbAggregate() {
     }
 
