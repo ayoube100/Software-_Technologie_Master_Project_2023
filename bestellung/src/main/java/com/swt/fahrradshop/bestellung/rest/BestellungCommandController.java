@@ -3,7 +3,7 @@ package com.swt.fahrradshop.bestellung.rest;
 import com.swt.fahrradshop.bestellung.command.CancelBestellungCommand;
 import com.swt.fahrradshop.bestellung.command.CreateBestellungCommand;
 import com.swt.fahrradshop.bestellung.command.UpdatePayedOrSentBestellungCommand;
-import com.swt.fahrradshop.bestellung.model.BestellungModel;
+import com.swt.fahrradshop.bestellung.model.BestellungCommandModel;
 import com.swt.fahrradshop.bestellung.valueObject.BestellungsstatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -13,16 +13,16 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController("/bestellung")
 @Slf4j
-public class BestellungController {
+public class BestellungCommandController {
 
     private final CommandGateway commandGateway;
-    public BestellungController(CommandGateway cmd)
+    public BestellungCommandController(CommandGateway cmd)
     {
         this.commandGateway = cmd;
     }
 
     @PostMapping("/create")
-    public String createBestellung (@RequestBody BestellungModel bestellung){
+    public String createBestellung (@RequestBody BestellungCommandModel bestellung){
         //put payload coming from Frontend in Command
         CreateBestellungCommand cmd = CreateBestellungCommand.builder()
                 .bestellungId(UUID.randomUUID().toString())

@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-public class WarenkorbController {
+public class WarenkorbCommandController {
 
     private final CommandGateway commandGateway;
 
-    public WarenkorbController(CommandGateway cmd) {
+    public WarenkorbCommandController(CommandGateway cmd) {
         this.commandGateway = cmd;
     }
 
