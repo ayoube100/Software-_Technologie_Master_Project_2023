@@ -1,0 +1,17 @@
+###create a Bestellung with payload
+POST http://localhost:9090/create
+Content-Type: application/json
+{
+  "kundeId": "Leo77",
+  "warenkorbId": "ABCD",
+  "gesamtpreis": 182
+}
+####delete an existing Bestellung
+
+DELETE http://localhost:9090/create/{bestellungId}
+
+###update the status of Bestellung when the order has been payed
+PUT http://localhost:9090/payed/{bestellungId}
+
+###update status of Bestellung when the order has been sent
+PUT http://localhost:9090/sent/{bestellungId}
