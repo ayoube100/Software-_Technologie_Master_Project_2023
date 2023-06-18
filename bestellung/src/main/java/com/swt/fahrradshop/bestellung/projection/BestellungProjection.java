@@ -11,9 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-//CRUD operation into DB
 public class BestellungProjection {
-
 
     private final BestellungRepository bestellungRepository;
 
@@ -21,11 +19,8 @@ public class BestellungProjection {
         this.bestellungRepository = bestellungRepository;
     }
 
-    //triggered when Event is dispatched
     @EventHandler
-    public void on(BestellungCreatedEvent evt) throws Exception{
-
-        //TODO -- Chaouite check if it already exists in DB
+    public void on(BestellungCreatedEvent evt){
 
         BestellungEntity bestellung = new BestellungEntity(
                 evt.getBestellungId(),
@@ -34,13 +29,11 @@ public class BestellungProjection {
                 evt.getWarenkorbId(),
                 evt.getGesamtpreis()
         );
-
-        //save the created entity in DB
         bestellungRepository.save(bestellung);
     }
 
     @EventHandler
-    public void on(BestellungCanceledEvent evt) throws Exception {
+    public void on(BestellungCanceledEvent evt){
         bestellungRepository.deleteById(evt.getBestellungId());
     }
 

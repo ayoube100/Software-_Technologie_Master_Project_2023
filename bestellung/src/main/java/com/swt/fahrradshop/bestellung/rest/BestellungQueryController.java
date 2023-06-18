@@ -14,22 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bestellungen")
+@RequestMapping
 public class BestellungQueryController {
 
     @Autowired
     private QueryGateway queryGateway;
-    @GetMapping
+    @GetMapping("/bestellungen")
     public List<BestellungQueryModel> getBestellungen (){
         FindBestellungenQuery qry = new FindBestellungenQuery() ;
-        List<BestellungQueryModel> bestellungen = queryGateway.query(qry, ResponseTypes.multipleInstancesOf(BestellungQueryModel.class)).join();
-        return bestellungen;
+        return queryGateway.query(qry, ResponseTypes.multipleInstancesOf(BestellungQueryModel.class)).join();
     }
 
-    @GetMapping("/{bestellungToBeFoundId}")
-    public BestellungQueryModel getBestellungById(@PathVariable String bestellungToBeFoundId){
-        FindBestellungByIdQuery qry = new FindBestellungByIdQuery(bestellungToBeFoundId);
-        BestellungQueryModel bestellungToBeFound = queryGateway.query(qry,BestellungQueryModel.class).join();
-        return bestellungToBeFound;
+    @GetMapping("/bestellungen/{bestellungId}")
+    public BestellungQueryModel getBestellungById(@PathVariable String bestellungId){
+        FindBestellungByIdQuery qry = new FindBestellungByIdQuery(bestellungId);
+        return queryGateway.query(qry,BestellungQueryModel.class).join();
     }
 }

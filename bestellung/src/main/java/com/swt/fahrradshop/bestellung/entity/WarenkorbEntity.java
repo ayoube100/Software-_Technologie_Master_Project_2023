@@ -1,20 +1,16 @@
 package com.swt.fahrradshop.bestellung.entity;
 
-import com.swt.fahrradshop.bestellung.valueObject.Produkt;
+import com.swt.fahrradshop.bestellung.valueObject.WarenkorbProdukt;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
-
-@Entity
-@Table(name="Warenkoerbe")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name="warenkoorbe")
 public class WarenkorbEntity {
     @Id
     private String warenkorbId;
@@ -22,8 +18,9 @@ public class WarenkorbEntity {
     private String kundeId;
 
     @ElementCollection
-    private List<Produkt> produkteList;
+    @CollectionTable(name="warenkorb_produkte", joinColumns = @JoinColumn(name="warenkorbId"))
+    private List<WarenkorbProdukt> produkteList;
 
-    private BigDecimal gesamtpreis;
+    private String warenkorbStatus;
 
 }

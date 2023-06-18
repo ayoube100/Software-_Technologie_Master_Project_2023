@@ -1,9 +1,6 @@
 package com.swt.fahrradshop.bestellung.entity;
 
-import com.swt.fahrradshop.bestellung.valueObject.*;
 import lombok.*;
-
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -18,7 +15,6 @@ public class BestellungEntity  {
     private String bestellungId;
 
     private String bestellungsstatus;
-
     private String kundeId;
     private String warenkorbId;
     private BigDecimal gesamtpreis;

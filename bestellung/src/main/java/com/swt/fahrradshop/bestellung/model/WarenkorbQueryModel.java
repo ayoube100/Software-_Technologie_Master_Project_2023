@@ -1,23 +1,21 @@
-package com.swt.fahrradshop.bestellung.event;
+package com.swt.fahrradshop.bestellung.model;
 
 import com.swt.fahrradshop.bestellung.valueObject.WarenkorbProdukt;
-import com.swt.fahrradshop.bestellung.valueObject.WarenkorbStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class WarenkorbCreatedEvent {
+@NoArgsConstructor
+@Builder
+public class WarenkorbQueryModel {
+
     private String warenkorbId;
     private String KundeId;
-    private List<WarenkorbProdukt> produkte;
-    private WarenkorbStatusEnum warenkorbStatus;
-
-
+    private List<WarenkorbProdukt> produkteList;
+    private String warenkorbStatus;
 }
+

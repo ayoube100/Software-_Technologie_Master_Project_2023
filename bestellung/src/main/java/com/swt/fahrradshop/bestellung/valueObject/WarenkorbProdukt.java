@@ -1,15 +1,17 @@
 package com.swt.fahrradshop.bestellung.valueObject;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
-import java.math.BigDecimal;
 
-//TODO -- Ayoub: get Produkt data
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Embeddable
-public class Produkt {
+public class WarenkorbProdukt {
+
     private String produktId;
-    private BigDecimal produktPreis;
     private Integer produktAnzahl;
 }
