@@ -8,7 +8,6 @@ import com.swt.fahrradshop.bestellung.event.ProduktFromWarenkorbDeletedEvent;
 import com.swt.fahrradshop.bestellung.event.ProduktToWarenkorbAddedEvent;
 import com.swt.fahrradshop.bestellung.event.WarenkorbCreatedEvent;
 import com.swt.fahrradshop.bestellung.event.WarenkorbOrderedEvent;
-import com.swt.fahrradshop.bestellung.repository.WarenkorbRepository;
 import com.swt.fahrradshop.bestellung.valueObject.WarenkorbProdukt;
 import com.swt.fahrradshop.bestellung.valueObject.WarenkorbStatusEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,6 @@ import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 

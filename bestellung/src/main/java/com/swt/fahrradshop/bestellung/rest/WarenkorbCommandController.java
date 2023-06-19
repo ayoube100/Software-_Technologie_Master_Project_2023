@@ -7,7 +7,9 @@ import com.swt.fahrradshop.bestellung.command.OrderWarenkorbCommand;
 import com.swt.fahrradshop.bestellung.valueObject.WarenkorbProdukt;
 import com.swt.fahrradshop.bestellung.valueObject.WarenkorbStatusEnum;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,44 +24,59 @@ public class WarenkorbCommandController {
     }
 
     @PostMapping("/warenkorb/create/{kundeId}")
-    public void createWarenkorb(@PathVariable String kundeId){
-        List<WarenkorbProdukt> products = new ArrayList<>();
-        WarenkorbProdukt initial = new WarenkorbProdukt("ppp",2);
-        products.add(initial);
-        CreateWarenkorbCommand cmd = CreateWarenkorbCommand.builder()
-                .warenkorbId(UUID.randomUUID().toString())
-                .KundeId(kundeId)
-                .produkte(products)
-                .warenkorbStatus(WarenkorbStatusEnum.NICHT_BESTELLT)
-                .build();
-        commandGateway.send(cmd);
+    public Mono<ResponseEntity<String>> createWarenkorb(@PathVariable String kundeId) {
+        return Mono.fromCallable(() -> {
+            List<WarenkorbProdukt> products = new ArrayList<>();
+            CreateWarenkorbCommand cmd = CreateWarenkorbCommand.builder()
+                    .warenkorbId(UUID.randomUUID().toString())
+                    .KundeId(kundeId)
+                    .produkte(products)
+                    .warenkorbStatus(WarenkorbStatusEnum.NICHT_BESTELLT)
+                    .build();
+            commandGateway.send(cmd);
+            return ResponseEntity.ok("Warenkorb for: " + kundeId + " is created");
+        });
     }
 
-    @PutMapping("/warenkorb/{warenkorbtId}/add/{produktId}/{anzahl}")
-    public void addProduktToWarenkorb(@PathVariable String warenkorbtId,
-                                      @PathVariable String produktId,
-                                      @PathVariable Integer anzahl ){
-        AddProduktToWarenkorbCommand cmd = new AddProduktToWarenkorbCommand(
-                                                warenkorbtId,
-                                                produktId,
-                                                anzahl);
-        commandGateway.send(cmd);
+    @PutMapping("/warenkorb/{warenkorbId}/add/{produktId}/{anzahl}")
+    public Mono<ResponseEntity<String>> addProduktToWarenkorb(@PathVariable String warenkorbId,
+                                                              @PathVariable String produktId,
+                                                              @PathVariable Integer anzahl) {
+
+        return Mono.fromCallable(() -> {
+            AddProduktToWarenkorbCommand cmd = new AddProduktToWarenkorbCommand(
+                    warenkorbId,
+                    produktId,
+                    anzahl);
+            commandGateway.send(cmd);
+            return ResponseEntity.ok(anzahl + "*Produkt : " + produktId
+                    + " have been added to " + warenkorbId);
+        });
+
     }
 
     //delete only by one
-    @PutMapping("/warenkorb/{warenkorbtId}/delete/{produktId}")
-    public void deleteProduktToWarenkorb(@PathVariable String warenkorbtId,
-                                      @PathVariable String produktId){
-        DeleteProduktFromWarenkorbCommand cmd = new DeleteProduktFromWarenkorbCommand(
-                warenkorbtId,
-                produktId);
-        commandGateway.send(cmd);
+    @PutMapping("/warenkorb/{warenkorbId}/delete/{produktId}")
+    public Mono<ResponseEntity<String>> deleteProduktToWarenkorb(@PathVariable String warenkorbId,
+                                                                 @PathVariable String produktId) {
+        return Mono.fromCallable(() -> {
+            DeleteProduktFromWarenkorbCommand cmd = new DeleteProduktFromWarenkorbCommand(
+                    warenkorbId,
+                    produktId);
+            commandGateway.send(cmd);
+            return ResponseEntity.ok("Produkt : " + produktId
+                    + " is deleted from " + warenkorbId);
+        });
     }
 
     @PutMapping("/warenkorb/{warenkorbId}/order")
-    public void orderWarenkorb(@PathVariable String warenkorbId){
-        OrderWarenkorbCommand cmd = new OrderWarenkorbCommand(warenkorbId);
-        commandGateway.send(cmd);
+    public Mono<ResponseEntity<String>> orderWarenkorb(@PathVariable String warenkorbId) {
+        return Mono.fromCallable(() -> {
+            OrderWarenkorbCommand cmd = new OrderWarenkorbCommand(warenkorbId);
+            commandGateway.send(cmd);
+            return ResponseEntity.ok("warenkorb : " + warenkorbId
+                    + " is ordered");
+        });
     }
 
 

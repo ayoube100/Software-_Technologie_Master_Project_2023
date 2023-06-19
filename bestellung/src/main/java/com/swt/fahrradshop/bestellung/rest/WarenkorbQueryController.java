@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 @RestController
 @RequestMapping
 public class WarenkorbQueryController {
@@ -18,14 +20,15 @@ public class WarenkorbQueryController {
     @Autowired
     private QueryGateway queryGateway;
     @GetMapping("/warenkoerbe")
-    public List<WarenkorbQueryModel> getWarenkoerbe (){
+    public Flux<WarenkorbQueryModel> getWarenkoerbe (){
         FindWarenkoerbeQuery qry = new FindWarenkoerbeQuery();
-        return queryGateway.query(qry, ResponseTypes.multipleInstancesOf(WarenkorbQueryModel.class)).join();
+        return Mono.fromFuture(queryGateway.query(qry, ResponseTypes.multipleInstancesOf(WarenkorbQueryModel.class)))
+                .flatMapMany((Flux::fromIterable));
     }
 
     @GetMapping("/warenkoerbe/{warenkorbId}")
-    public WarenkorbQueryModel getWarenkorbById(@PathVariable String warenkorbId){
+    public Mono<WarenkorbQueryModel> getWarenkorbById(@PathVariable String warenkorbId){
         FindWarenkorbByIdQuery qry = new FindWarenkorbByIdQuery(warenkorbId);
-        return  queryGateway.query(qry, WarenkorbQueryModel.class).join();
+        return  Mono.fromFuture(queryGateway.query(qry, WarenkorbQueryModel.class));
     }
 }

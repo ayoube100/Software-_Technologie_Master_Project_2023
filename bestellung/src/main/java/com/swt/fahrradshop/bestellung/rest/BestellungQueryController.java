@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import java.util.List;
 
 @RestController
 @RequestMapping
@@ -19,15 +20,18 @@ public class BestellungQueryController {
 
     @Autowired
     private QueryGateway queryGateway;
-    @GetMapping("/bestellungen")
-    public List<BestellungQueryModel> getBestellungen (){
+    //with real time update
+    @GetMapping(value= "/bestellungen", produces ="text/event-stream")
+    public Flux<BestellungQueryModel> getBestellungen (){
         FindBestellungenQuery qry = new FindBestellungenQuery() ;
-        return queryGateway.query(qry, ResponseTypes.multipleInstancesOf(BestellungQueryModel.class)).join();
+        return Mono.fromFuture(queryGateway.query(qry, ResponseTypes.multipleInstancesOf(BestellungQueryModel.class)))
+                .flatMapMany(Flux::fromIterable);
     }
 
-    @GetMapping("/bestellungen/{bestellungId}")
-    public BestellungQueryModel getBestellungById(@PathVariable String bestellungId){
+
+    @GetMapping(value= "/bestellungen/{bestellungId}")
+    public Mono<BestellungQueryModel> getBestellungById(@PathVariable String bestellungId){
         FindBestellungByIdQuery qry = new FindBestellungByIdQuery(bestellungId);
-        return queryGateway.query(qry,BestellungQueryModel.class).join();
+        return Mono.fromFuture(queryGateway.query(qry,BestellungQueryModel.class));
     }
 }
