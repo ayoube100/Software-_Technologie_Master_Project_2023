@@ -1,6 +1,5 @@
 package com.swt.fahrradshop.bestellung.repository;
 
-//import com.swt.fahrradshop.bestellung.entity.BestellungEntity;
 import com.swt.fahrradshop.bestellung.entity.BestellungEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

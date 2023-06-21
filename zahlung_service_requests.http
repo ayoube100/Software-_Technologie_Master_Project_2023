@@ -1,0 +1,21 @@
+##################################-- Zahlung --##################################
+
+###create a Bestellung with payload
+POST http://localhost:9191/zahlung/process
+Content-Type: application/json
+{
+  "bestellungId":"ASSA",
+  "gesamtpreis":800,
+  "kreditKarte":
+  {
+    "number":"XXXXXXXXXXXXXXXX",
+    "holder":"ELINORE",
+    "expDate":"09/25",
+    "cvv":"456"
+  }
+}
+
+####get an existing Zahlung
+###/zahlung/{zahlungId}
+GET http://localhost:9191/zahlung/--/status
+
