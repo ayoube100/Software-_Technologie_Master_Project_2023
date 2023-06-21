@@ -18,7 +18,7 @@ public class LogistikCommandService {
         //CommandGateway for dispatching commands
     private final CommandGateway commandGateway;
 
-    public CompletableFuture<Logistik> createLogistik (LogistikDto produktdto) {
+    public CompletableFuture<Logistik> createLogistik (LogistikDto logistikDto) {
         return this.commandGateway.send(new CreateLogistikCommand(
                 UUID.randomUUID()
         ));

@@ -20,22 +20,22 @@ import java.util.UUID;
 //this aggregate receives and handles the Commands and for every Command will dispatch a Query.
 public class LogistikAggregate {
     @AggregateIdentifier
-    private UUID id;
+    private UUID logistikId;
 
 
     @CommandHandler
-    public LogistikAggregate(CreateLogistikCommand command){
-        // this is an Axon annotation used to notify the ProduktAggregate that a new Produkt was creating by publishing a ProduktCreatedEvent
-        AggregateLifecycle.apply(
-                new LogistikCreatedEvent(
-                        command.getProduktId()
-                )
+    public LogistikAggregate(CreateLogistikCommand cmd){
+
+        LogistikCreatedEvent evt = LogistikCreatedEvent.builder()
+
+        AggregateLifecycle.apply(evt);
         );
     }
+    
+    //triggered when event dispatched => actualize the state of the aggregate
     @EventSourcingHandler
-    public void on(LogistikCreatedEvent event){
-
-        this.id = event.getLogistikId();
+    public void on(LogistikCreatedEvent evt) throws Exception{
+        this.logistikId = evt.getLogistikId();
     }
 
 

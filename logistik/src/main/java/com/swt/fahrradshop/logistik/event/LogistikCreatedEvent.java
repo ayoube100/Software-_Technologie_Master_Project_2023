@@ -1,16 +1,20 @@
 package com.swt.fahrradshop.logistik.event;
 
+import com.swt.fahrradshop.logistik.valueObject.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.axonframework.modelling.command.TargetAggregateIdentifier;
-
-import java.util.UUID;
 
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
-// this event will notify that a ProduktCreateCommand is received
+@AllArgsConstructor
 public class LogistikCreatedEvent {
-    private UUID logistikId;
+    private String logistikId;
+    private String bestellungId;
+    private LieferstatusEnum lieferstatus;
+    private LagerortType lagerortValueObject;;
+    private VersandnummerType versandnummerValueObject;
+    private LieferadresseType lieferadresseValueObject;
 }

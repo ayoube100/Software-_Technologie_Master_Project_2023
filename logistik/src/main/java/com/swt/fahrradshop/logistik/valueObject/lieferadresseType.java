@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class lieferadresseType {
+public class LieferadresseType {
     private String adresse;
 }

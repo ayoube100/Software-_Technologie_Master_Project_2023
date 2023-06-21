@@ -1,16 +1,18 @@
 package com.swt.fahrradshop.logistik.command;
 
+import com.swt.fahrradshop.logistik.valueObject.LieferstatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
-import java.util.UUID;
 @Data
+@Builder
 @AllArgsConstructor
 public class CreateLogistikCommand {
 
     @TargetAggregateIdentifier
-    private UUID produktId;
+    private final String logistikId;
+    private final LieferstatusEnum lieferstatusEnum;
 }
 

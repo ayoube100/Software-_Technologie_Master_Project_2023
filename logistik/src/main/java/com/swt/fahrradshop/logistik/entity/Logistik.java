@@ -1,15 +1,12 @@
 package com.swt.fahrradshop.logistik.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.swt.fahrradshop.logistik.valueObject.*;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 import org.springframework.stereotype.Indexed;
-
-import java.util.UUID;
 
 @Entity
 @Data
@@ -18,7 +15,7 @@ import java.util.UUID;
 
 public class Logistik {
     @Id
-    private UUID logistikId;
+    private String logistikId;
     
     
 }

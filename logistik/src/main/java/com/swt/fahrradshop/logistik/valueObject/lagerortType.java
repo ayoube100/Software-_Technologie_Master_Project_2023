@@ -6,13 +6,11 @@ package com.swt.fahrradshop.logistik.valueObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
 @AllArgsConstructor
-public class lagerortType {
+public class LagerortType {
     
-    private UUID id; 
+    private String lagerortId; 
     private String standort;
    // private List<Produkt> lagerbestand; 
 }
