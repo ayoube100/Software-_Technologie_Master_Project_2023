@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
 public interface ProduktRepository extends JpaRepository<Produkt, UUID> {
+
+    Produkt findProduktById(UUID id );
 }
