@@ -15,8 +15,8 @@
 	<description>logistik service for e-commerce website</description>
 	<properties>
 		<java.version>17</java.version>
-
-		<spring-cloud.version>2020.0.2</spring-cloud.version>	</properties>
+		<spring-cloud.version>2020.0.2</spring-cloud.version>
+	</properties>
 	<dependencies>
 
 		<dependency>
@@ -30,11 +30,15 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.axonframework</groupId>
 			<artifactId>axon-spring-boot-starter</artifactId>
 			<version>4.4.7</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

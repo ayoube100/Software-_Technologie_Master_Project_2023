@@ -10,9 +10,10 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 @Builder
 @AllArgsConstructor
 public class CreateLogistikCommand {
-
     @TargetAggregateIdentifier
     private final String logistikId;
+
     private final LieferstatusEnum lieferstatusEnum;
+    private final String bestellungId; 
 }
 

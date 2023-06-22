@@ -1,10 +1,10 @@
 package com.swt.fahrradshop.logistik.valueObject;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import javax.persistence.Embeddable;
 
+@Embeddable
 @Data
-@AllArgsConstructor
-public class LieferadresseType {
+public class LieferadresseValueObject {
     private String adresse;
 }

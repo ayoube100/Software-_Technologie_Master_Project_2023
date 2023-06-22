@@ -1,28 +1,54 @@
 package com.swt.fahrradshop.logistik.rest;
 
-import com.swt.fahrradshop.logistik.dto.LogistikDto;
-import com.swt.fahrradshop.logistik.entity.Logistik;
-import com.swt.fahrradshop.logistik.service.LogistikCommandService;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+import com.swt.fahrradshop.logistik.command.CancelLogistikCommand;
+import com.swt.fahrradshop.logistik.command.CreateLogistikCommand;
+import com.swt.fahrradshop.logistik.command.SendShippingCommand;
+import com.swt.fahrradshop.logistik.model.LogistikCommandModel;
+import com.swt.fahrradshop.logistik.valueObject.LieferstatusEnum;
+import lombok.extern.slf4j.Slf4j;
+import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.concurrent.CompletableFuture;
+import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 @RestController
-@AllArgsConstructor
-@RequestMapping
-//Craeting REST API for the Commands
+@Slf4j
 public class LogistikCommandController {
-    private final LogistikCommandService logistikCommandService;
-    @PostMapping("/logistik/create")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public CompletableFuture<Logistik> createLogistik(@RequestBody LogistikDto logistikDto){
-        return this.logistikCommandService.createLogistik(logistikDto);
+
+    private final CommandGateway commandGateway;
+    public LogistikCommandController(CommandGateway cmd)
+    {
+        this.commandGateway = cmd;
     }
 
+    @PostMapping("/logistik/create")
+    public Mono<ResponseEntity<String>> createLogistik (@RequestBody LogistikCommandModel logistik){
+        return Mono.fromCallable(() -> {
+            CreateLogistikCommand cmd = CreateLogistikCommand.builder()
+                    .logistikId(UUID.randomUUID().toString())
+                    .lieferstatusEnum(LieferstatusEnum.AUSSTEHEND)
+                    .bestellungId(logistik.getBestellungId())
+                    .build();
+            commandGateway.send(cmd);
+            return ResponseEntity.ok("Logistik " + logistik +" is created.");
+        });
+    }
+    @DeleteMapping("/logistik/cancel/{logistikId}")
+    public Mono<ResponseEntity<String>> cancelLogisitik(@PathVariable String logistikId){
+        return Mono.fromCallable(() -> {
+            CancelLogistikCommand cmd = CancelLogistikCommand.builder().logistikId(logistikId).build();
+            commandGateway.send(cmd);
+            return ResponseEntity.ok("Logistik: " + logistikId + " is canceled.");
+        });
+    }
 
-
-
+    @PutMapping("/logistik/sent/{logistikId}")
+    public Mono<ResponseEntity<String>> sendShippingStatus(@PathVariable String logistikId){
+        return Mono.fromCallable(() -> {
+            SendShippingCommand cmd = SendShippingCommand.builder().logistikId(logistikId).build();
+            commandGateway.send(cmd);
+            return ResponseEntity.ok("Logistik: " + logistikId + " has sent.");
+        });
+    }
 }
-

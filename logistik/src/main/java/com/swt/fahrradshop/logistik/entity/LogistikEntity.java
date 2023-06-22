@@ -1,21 +1,24 @@
 package com.swt.fahrradshop.logistik.entity;
 
-import com.swt.fahrradshop.logistik.valueObject.*;
 import lombok.*;
 
 
 import javax.persistence.*;
 
-import org.springframework.stereotype.Indexed;
 
-@Entity
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "logistik")
 
-public class Logistik {
+public class LogistikEntity {
     @Id
     private String logistikId;
+    
+    private String bestellungId;
+    private String lieferstatus;
     
     
 }

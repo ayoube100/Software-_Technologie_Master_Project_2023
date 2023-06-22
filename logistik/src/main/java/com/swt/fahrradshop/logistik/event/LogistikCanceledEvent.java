@@ -1,6 +1,5 @@
 package com.swt.fahrradshop.logistik.event;
 
-import com.swt.fahrradshop.logistik.valueObject.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,13 +10,7 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LogistikCreatedEvent {
+public class LogistikCanceledEvent {
     @TargetAggregateIdentifier
     private String logistikId;
-
-    private String bestellungId;
-    private LieferstatusEnum lieferstatus;
-// private LagerortValueObject lagerortValueObject;;
-//  private VersandnummerValueObject versandnummerValueObject;
-//  private LieferadresseValueObject lieferadresseValueObject;
 }

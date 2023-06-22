@@ -1,10 +1,10 @@
 package com.swt.fahrradshop.logistik.valueObject;
 
-import lombok.AllArgsConstructor;
+import javax.persistence.Embeddable;
 import lombok.Data;
 
+@Embeddable
 @Data
-@AllArgsConstructor
-public class VersandnummerType {
+public class VersandnummerValueObject {
     private String trackingNummer;
 }
