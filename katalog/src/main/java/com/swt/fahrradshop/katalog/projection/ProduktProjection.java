@@ -1,8 +1,11 @@
 package com.swt.fahrradshop.katalog.projection;
 import com.swt.fahrradshop.katalog.event.ProduktCreatedEvent;
 import com.swt.fahrradshop.katalog.entity.Produkt;
+import com.swt.fahrradshop.katalog.event.ProduktDeletedEvent;
+import com.swt.fahrradshop.katalog.event.ProduktUpdatedEvent;
 import com.swt.fahrradshop.katalog.repository.ProduktRepository;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.eventhandling.EventHandler;
@@ -23,7 +26,11 @@ public class ProduktProjection {
         Produkt produkt = new Produkt(
                 produktCreatedEvent.getProduktId(),
                 produktCreatedEvent.getName(),
-                produktCreatedEvent.getPrice()
+                produktCreatedEvent.getPreis(),
+                produktCreatedEvent.getAnzahl(),
+                produktCreatedEvent.getKategorie(),
+                produktCreatedEvent.getVerfuegbarkeit()
+
 
 
 
@@ -35,5 +42,29 @@ public class ProduktProjection {
 
 
     }
+    @EventHandler
+    public void on(ProduktUpdatedEvent produktUpdatedEvent) {
+        log.debug("Handling a Produkt update Command{}", produktUpdatedEvent.getProduktId());
+        Produkt produkt = new Produkt(
+                produktUpdatedEvent.getProduktId(),
+                produktUpdatedEvent.getNewName(),
+                produktUpdatedEvent.getNewPreis(),
+                produktUpdatedEvent.getNewAnzahl(),
+                produktUpdatedEvent.getNewKategorie(),
+                produktUpdatedEvent.getNewVerfuegbarkeit()
 
+
+
+        );
+
+        this.produktRepository.save(produkt);
+
+
+
+    }
+    @EventHandler
+    public void on(ProduktDeletedEvent event) {
+        log.debug("Handling DeleteProduktEvent for Produkt with ID: {}", event.getProduktId());
+        produktRepository.deleteById(event.getProduktId());
+    }
 }

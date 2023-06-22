@@ -1,4 +1,6 @@
 package com.swt.fahrradshop.katalog.event;
+import com.swt.fahrradshop.katalog.valueObject.Kategorie;
+import com.swt.fahrradshop.katalog.valueObject.Verfuegbarkeit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +17,10 @@ public class ProduktCreatedEvent {
     @TargetAggregateIdentifier
     private UUID produktId;
     private String Name;
-    private BigDecimal Price;
+    private BigDecimal Preis;
+    private BigDecimal Anzahl;
+    private Kategorie Kategorie;
+    private Verfuegbarkeit Verfuegbarkeit;
 
 
 }

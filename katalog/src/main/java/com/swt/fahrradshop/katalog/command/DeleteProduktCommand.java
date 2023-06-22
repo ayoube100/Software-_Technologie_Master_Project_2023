@@ -1,6 +1,11 @@
 package com.swt.fahrradshop.katalog.command;
 
-public class DeleteProduktCommand {
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-    
+import java.util.UUID;
+@Data
+@AllArgsConstructor
+public class DeleteProduktCommand {
+    private UUID produktId;
 }
