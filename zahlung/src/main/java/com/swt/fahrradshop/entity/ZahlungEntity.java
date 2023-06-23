@@ -1,6 +1,6 @@
 package com.swt.fahrradshop.entity;
 
-import com.swt.fahrradshop.valueObject.KreditKarte;
+import valueObject.KreditKarte;
 import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;

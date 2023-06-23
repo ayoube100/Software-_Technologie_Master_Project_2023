@@ -1,7 +1,8 @@
-package com.swt.fahrradshop.event;
+package events;
 
-import com.swt.fahrradshop.valueObject.KreditKarte;
-import com.swt.fahrradshop.valueObject.ZahlungsstatusEnum;
+
+import valueObject.KreditKarte;
+import valueObject.ZahlungsstatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

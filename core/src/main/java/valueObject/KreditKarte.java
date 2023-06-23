@@ -1,10 +1,11 @@
-package com.swt.fahrradshop.valueObject;
+package valueObject;
 
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Embeddable;
+
 
 @Data
 @AllArgsConstructor

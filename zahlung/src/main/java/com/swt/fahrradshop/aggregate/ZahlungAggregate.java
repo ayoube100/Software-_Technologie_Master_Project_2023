@@ -1,9 +1,9 @@
 package com.swt.fahrradshop.aggregate;
 
-import com.swt.fahrradshop.command.ProcessZahlungCommand;
-import com.swt.fahrradshop.event.ZahlungProcessedEvent;
-import com.swt.fahrradshop.valueObject.KreditKarte;
-import com.swt.fahrradshop.valueObject.ZahlungsstatusEnum;
+import com.swt.fahrradshop.core.commands.ProcessZahlungCommand;
+import events.ZahlungProcessedEvent;
+import valueObject.KreditKarte;
+import valueObject.ZahlungsstatusEnum;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -19,7 +19,7 @@ public class ZahlungAggregate {
     private  String zahlungId;
     private  String bestellungId;
     private  BigDecimal gesamtpreis;
-    private  KreditKarte kreditKarte;
+    private KreditKarte kreditKarte;
     private ZahlungsstatusEnum zahlungsstatusEnum;
 
     public ZahlungAggregate() {

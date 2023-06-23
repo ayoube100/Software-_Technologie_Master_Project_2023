@@ -1,6 +1,6 @@
 package com.swt.fahrradshop.model;
 
-import com.swt.fahrradshop.valueObject.KreditKarte;
+import valueObject.KreditKarte;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

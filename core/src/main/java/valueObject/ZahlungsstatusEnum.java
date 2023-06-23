@@ -1,4 +1,4 @@
-package com.swt.fahrradshop.valueObject;
+package valueObject;
 
 public enum ZahlungsstatusEnum {
     BEZAHLT,IN_BEARBEITUNG, ABGELEHNT

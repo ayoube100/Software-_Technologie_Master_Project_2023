@@ -1,8 +1,9 @@
 package com.swt.fahrradshop.rest;
 
-import com.swt.fahrradshop.command.ProcessZahlungCommand;
+
+import com.swt.fahrradshop.core.commands.ProcessZahlungCommand;
+import valueObject.ZahlungsstatusEnum;
 import com.swt.fahrradshop.model.ZahlungCommandModel;
-import com.swt.fahrradshop.valueObject.ZahlungsstatusEnum;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -48,7 +48,7 @@ public class BestellungCommandController {
     @PutMapping("/bestellung/payed/{bestellungId}")
     public Mono<ResponseEntity<String>> updatePayedBestellungStatus(@PathVariable String bestellungId){
         return Mono.fromCallable(() -> {
-            UpdatePayedOrSentBestellungCommand cmd = UpdatePayedOrSentBestellungCommand.builder().bestellungId(bestellungId).build();
+                UpdatePayedOrSentBestellungCommand cmd = UpdatePayedOrSentBestellungCommand.builder().bestellungId(bestellungId).build();
             commandGateway.send(cmd);
             return ResponseEntity.ok("Bestellung: " + bestellungId + " is now payed.");
         });
