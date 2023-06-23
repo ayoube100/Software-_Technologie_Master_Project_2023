@@ -63,3 +63,6 @@ _PTI09420 -Projekt Softwaretechnologie SoSe23- Westsächsische Hoschule Zwickau_
 
 #### Szenario 5: Das Produkt entsprach nicht den Erwartungen des Käufers, was zu einer Rückgabeaufforderung führte 
 ![Sczenario5](https://media.github.fh-zwickau.de/user/96/files/017fc8f7-9242-4eee-934c-68db07f543a9)
+
+## BestellungSaga workflow
+![Untitled-2023-06-22-2225 (2)](https://media.github.fh-zwickau.de/user/96/files/893361ca-6064-447c-bb45-582b393e740a)
