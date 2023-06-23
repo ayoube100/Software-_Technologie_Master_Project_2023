@@ -129,7 +129,7 @@ public class ProduktAggregate {
     public void on(ProduktDeletedEvent event) {
        markDeleted();
     }
-
+    @EventSourcingHandler
     public void on(ProduktsReservedEvent event) {
 
         UUID bestellungId = event.getBestellungId();
