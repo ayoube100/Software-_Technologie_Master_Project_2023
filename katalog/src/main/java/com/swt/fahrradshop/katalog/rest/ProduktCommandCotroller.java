@@ -2,6 +2,8 @@ package com.swt.fahrradshop.katalog.rest;
 
 
 
+import com.swt.fahrradshop.katalog.command.ReservationProduktsCommand;
+import com.swt.fahrradshop.katalog.command.UpdateProduktCommand;
 import com.swt.fahrradshop.katalog.dto.ProduktDto;
 import com.swt.fahrradshop.katalog.entity.Produkt;
 import com.swt.fahrradshop.katalog.service.ProduktCommandService;
@@ -27,34 +29,22 @@ public class ProduktCommandCotroller {
     @PostMapping("/katalog/create")
     @ResponseStatus(value = HttpStatus.CREATED)
     public CompletableFuture<Produkt> createProdukt(@RequestBody ProduktDto produktDto) {
-        return this.produktCommand.createProdukt(produktDto);
-
+        return produktCommand.createProdukt(produktDto);
     }
 
-    @PutMapping ("/katalog/update/{produktId}")
 
 
-    public ResponseEntity<String> updateProdukt(@PathVariable UUID produktId, @RequestBody ProduktDto produktDto) {
+    @PutMapping("/katalog/update/{produktId}")
+    public CompletableFuture <Produkt> updateProdukt(@PathVariable UUID produktId, @RequestBody ProduktDto produktDto) {
 
-        try {
-            produktCommand.updateProdukt(produktId, produktDto);
-            return ResponseEntity.ok("Produkt Succuessfully Updated");
-
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Produkt not updated");
-        }
-
-
+        return produktCommand.updateProdukt(produktId, produktDto);
     }
-    @DeleteMapping("/katalog/delete/{produktId}")
-    public ResponseEntity<String> deleteProdukt(@PathVariable UUID produktId) {
-        try {
-            produktCommand.deleteProdukt(produktId);
-            return ResponseEntity.ok("Produkt successfully deleted");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Failed to delete Produkt");
-        }
-    }
+
+@PostMapping("/katalog/reserve")
+public ResponseEntity<String> reserveProducts(@RequestBody ReservationProduktsCommand command) {
+    produktCommand.reserveProdukts(command);
+    return ResponseEntity.ok("Products reserved successfully");
+}
 }
 
 

@@ -2,6 +2,7 @@ package com.swt.fahrradshop.katalog.service;
 
 import com.swt.fahrradshop.katalog.command.CreateProduktCommand;
 import com.swt.fahrradshop.katalog.command.DeleteProduktCommand;
+import com.swt.fahrradshop.katalog.command.ReservationProduktsCommand;
 import com.swt.fahrradshop.katalog.command.UpdateProduktCommand;
 import com.swt.fahrradshop.katalog.dto.ProduktDto;
 import com.swt.fahrradshop.katalog.entity.Produkt;
@@ -22,6 +23,7 @@ public class ProduktCommandService {
     //CommandGateway for dispatching commands
     private final CommandGateway commandGateway;
 
+
     public CompletableFuture<Produkt> createProdukt (ProduktDto produktdto) {
         return this.commandGateway.send(new CreateProduktCommand(
                 UUID.randomUUID(),
@@ -34,7 +36,7 @@ public class ProduktCommandService {
 
     }
 
-    public CompletableFuture<String> updateProdukt(UUID produktId,ProduktDto produktdto)
+    public CompletableFuture<Produkt> updateProdukt(UUID produktId,ProduktDto produktdto)
                                                            {
         return this.commandGateway.send(new UpdateProduktCommand(
                 produktId,
@@ -48,5 +50,10 @@ public class ProduktCommandService {
     public CompletableFuture<String> deleteProdukt(UUID produktId) {
         return commandGateway.send(new DeleteProduktCommand(produktId));
     }
+    public void reserveProdukts(ReservationProduktsCommand command) {
+        commandGateway.sendAndWait(command);
+    }
+
 }
+
 
