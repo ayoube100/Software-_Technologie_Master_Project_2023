@@ -1,11 +1,10 @@
 package com.swt.fahrradshop.bestellung.event;
 
-import com.swt.fahrradshop.bestellung.valueObject.*;
+import com.swt.fahrradshop.bestellung.valueObject.BestellungsstatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 import java.math.BigDecimal;
 
@@ -14,9 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BestellungCreatedEvent {
-
-   // @TargetAggregateIdentifier
-    private  String bestellungId;
+    private String bestellungId;
 
     private BestellungsstatusEnum bestellungsstatus;
     private String kundeId;

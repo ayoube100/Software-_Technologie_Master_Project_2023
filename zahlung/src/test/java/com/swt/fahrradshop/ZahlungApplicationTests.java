@@ -2,15 +2,15 @@ package com.swt.fahrradshop;
 
 import com.swt.fahrradshop.aggregate.ZahlungAggregate;
 import com.swt.fahrradshop.core.commands.ProcessZahlungCommand;
-import com.swt.fahrradshop.model.ZahlungCommandModel;
-import events.ZahlungProcessedEvent;
+import com.swt.fahrradshop.core.events.ZahlungProcessedEvent;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import valueObject.KreditKarte;
-import valueObject.ZahlungsstatusEnum;
+import com.swt.fahrradshop.core.valueObject.KreditKarte;
+import com.swt.fahrradshop.core.valueObject.ZahlungsstatusEnum;
+
 import java.math.BigDecimal;
 
 
@@ -23,11 +23,6 @@ class ZahlungTests {
             "LEO MESSI",
             "08/25",
             "888"
-    );
-    private ZahlungCommandModel zahlungCommandModel = new ZahlungCommandModel(
-            "---BESTELLUNG--ID---",
-            BigDecimal.valueOf(1040),
-            kreditKarte
     );
 
     ZahlungProcessedEvent evt1 = new ZahlungProcessedEvent(

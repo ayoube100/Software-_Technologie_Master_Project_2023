@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class ProduktToWarenkorbAddedEvent {
     private String warenkorbId;
     private String produktId;
-    //number of the added Produkt
+    //number of Produkt to be added
     private Integer anzahl;
 
 }

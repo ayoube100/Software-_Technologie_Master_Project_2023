@@ -1,7 +1,6 @@
 package com.swt.fahrradshop.bestellung;
 
 import com.swt.fahrradshop.bestellung.aggregate.BestellungAggregate;
-
 import com.swt.fahrradshop.bestellung.command.CancelBestellungCommand;
 import com.swt.fahrradshop.bestellung.command.CreateBestellungCommand;
 import com.swt.fahrradshop.bestellung.command.UpdatePayedOrSentBestellungCommand;
@@ -12,6 +11,7 @@ import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -22,10 +22,12 @@ class BestellungTests {
     String kundeId = "XXLeoXXMessiXX";
     String warenkorbId = "XXABCXXABCXX";
     BigDecimal gesamtpreis = BigDecimal.valueOf(1040);
+
     @BeforeEach
     public void setUp() {
         fixture = new AggregateTestFixture<>(BestellungAggregate.class);
     }
+
     @Test
     void testCreateBestellung() {
         fixture.given()
@@ -42,7 +44,7 @@ class BestellungTests {
     }
 
     @Test
-    void testUpdatePayedBestellungStatus(){
+    void testUpdatePayedBestellungStatus() {
         fixture.given(new BestellungCreatedEvent(bestellungId,
                         BestellungsstatusEnum.ERSTELLT,
                         kundeId,
@@ -54,7 +56,7 @@ class BestellungTests {
     }
 
     @Test
-    void testUpdateSentBestellungStatus(){
+    void testUpdateSentBestellungStatus() {
         fixture.given(new PayedOrSentBestellungUpdatedEvent(bestellungId,
                         BestellungsstatusEnum.IN_BEARBEITUNG))
                 .when(new UpdatePayedOrSentBestellungCommand(bestellungId))

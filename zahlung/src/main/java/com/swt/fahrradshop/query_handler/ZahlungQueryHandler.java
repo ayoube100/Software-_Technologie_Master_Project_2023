@@ -16,8 +16,8 @@ public class ZahlungQueryHandler {
     }
 
     @QueryHandler
-    public String findZahlungStatusById(FindZahlungStatusByIdQuery qry){
+    public String findZahlungStatusById(FindZahlungStatusByIdQuery qry) {
         ZahlungEntity zahlung = zahlungRepository.findZahlungEntitiesByZahlungId(qry.getZahlungId());
-        return "Status of zahlung: "+ zahlung.getZahlungId() + " is: " + zahlung.getZahlungsstatus();
+        return "Status of zahlung: " + zahlung.getZahlungId() + " is: " + zahlung.getZahlungsstatus();
     }
 }

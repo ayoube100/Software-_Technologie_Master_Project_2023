@@ -1,14 +1,21 @@
 package com.swt.fahrradshop.bestellung;
 
 import com.swt.fahrradshop.bestellung.aggregate.WarenkorbAggregate;
-import com.swt.fahrradshop.bestellung.command.*;
-import com.swt.fahrradshop.bestellung.event.*;
+import com.swt.fahrradshop.bestellung.command.AddProduktToWarenkorbCommand;
+import com.swt.fahrradshop.bestellung.command.CreateWarenkorbCommand;
+import com.swt.fahrradshop.bestellung.command.DeleteProduktFromWarenkorbCommand;
+import com.swt.fahrradshop.bestellung.command.OrderWarenkorbCommand;
+import com.swt.fahrradshop.bestellung.event.ProduktFromWarenkorbDeletedEvent;
+import com.swt.fahrradshop.bestellung.event.ProduktToWarenkorbAddedEvent;
+import com.swt.fahrradshop.bestellung.event.WarenkorbCreatedEvent;
+import com.swt.fahrradshop.bestellung.event.WarenkorbOrderedEvent;
 import com.swt.fahrradshop.bestellung.valueObject.WarenkorbProdukt;
 import com.swt.fahrradshop.bestellung.valueObject.WarenkorbStatusEnum;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,10 +29,12 @@ public class WarenkorbTests {
     List<WarenkorbProdukt> produkte = new ArrayList<>();
     String produktId = "F--A--H--R--R--A--D";
     Integer anzahl = 8;
+
     @BeforeEach
     public void init() {
         fixture = new AggregateTestFixture<>(WarenkorbAggregate.class);
     }
+
     @Test
     void testCreateWarenkorb() {
         fixture.given()
@@ -41,6 +50,7 @@ public class WarenkorbTests {
                         WarenkorbStatusEnum.NICHT_BESTELLT)
                 );
     }
+
     @Test
     void testAddProduktToWarenkorb() {
         fixture.given(new WarenkorbCreatedEvent(

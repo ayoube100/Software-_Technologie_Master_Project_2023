@@ -29,6 +29,7 @@ public class WarenkorbAggregate {
     private String kundeId;
     private List<WarenkorbProdukt> produkteList;
     private WarenkorbStatusEnum warenkorbStatus;
+
     public WarenkorbAggregate() {
     }
 
@@ -44,44 +45,43 @@ public class WarenkorbAggregate {
     }
 
     @CommandHandler
-    public void handle(AddProduktToWarenkorbCommand cmd){
-        // Existence check is in the projection
+    public void handle(AddProduktToWarenkorbCommand cmd) {
         ProduktToWarenkorbAddedEvent evt = new ProduktToWarenkorbAddedEvent(cmd.getWarenkorbId(), cmd.getProduktId(), cmd.getAnzahl());
         AggregateLifecycle.apply(evt);
     }
 
     @CommandHandler
-    public void handle(DeleteProduktFromWarenkorbCommand cmd){
+    public void handle(DeleteProduktFromWarenkorbCommand cmd) {
         ProduktFromWarenkorbDeletedEvent evt = new ProduktFromWarenkorbDeletedEvent(cmd.getWarenkorbId(), cmd.getProduktId());
         AggregateLifecycle.apply(evt);
     }
 
     @CommandHandler
-    public void handle(OrderWarenkorbCommand cmd){
+    public void handle(OrderWarenkorbCommand cmd) {
         WarenkorbOrderedEvent evt = new WarenkorbOrderedEvent(cmd.getWarenkorbId());
         AggregateLifecycle.apply(evt);
     }
 
     @EventSourcingHandler
-    private void on(WarenkorbCreatedEvent evt){
+    private void on(WarenkorbCreatedEvent evt) {
         this.warenkorbId = evt.getWarenkorbId();
-        this.kundeId= evt.getKundeId();
+        this.kundeId = evt.getKundeId();
         this.produkteList = evt.getProdukte();
-        this.warenkorbStatus= evt.getWarenkorbStatus();
+        this.warenkorbStatus = evt.getWarenkorbStatus();
     }
 
     @EventSourcingHandler
-    private void on(ProduktToWarenkorbAddedEvent evt){
+    private void on(ProduktToWarenkorbAddedEvent evt) {
         this.warenkorbId = evt.getWarenkorbId();
     }
 
     @EventSourcingHandler
-    private void on(ProduktFromWarenkorbDeletedEvent evt){
+    private void on(ProduktFromWarenkorbDeletedEvent evt) {
         this.warenkorbId = evt.getWarenkorbId();
     }
 
     @EventSourcingHandler
-    private void on(WarenkorbOrderedEvent evt){
+    private void on(WarenkorbOrderedEvent evt) {
         this.warenkorbId = evt.getWarenkorbId();
     }
 

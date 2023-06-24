@@ -18,6 +18,4 @@ public class WarenkorbCreatedEvent {
     private String KundeId;
     private List<WarenkorbProdukt> produkte;
     private WarenkorbStatusEnum warenkorbStatus;
-
-
 }

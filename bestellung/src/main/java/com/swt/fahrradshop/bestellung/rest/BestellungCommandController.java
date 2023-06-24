@@ -10,6 +10,7 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
 import java.util.UUID;
 
 @RestController
@@ -17,13 +18,13 @@ import java.util.UUID;
 public class BestellungCommandController {
 
     private final CommandGateway commandGateway;
-    public BestellungCommandController(CommandGateway cmd)
-    {
+
+    public BestellungCommandController(CommandGateway cmd) {
         this.commandGateway = cmd;
     }
 
     @PostMapping("/bestellung/create")
-    public Mono<ResponseEntity<String>> createBestellung (@RequestBody BestellungCommandModel bestellung){
+    public Mono<ResponseEntity<String>> createBestellung(@RequestBody BestellungCommandModel bestellung) {
         return Mono.fromCallable(() -> {
             CreateBestellungCommand cmd = CreateBestellungCommand.builder()
                     .bestellungId(UUID.randomUUID().toString())
@@ -33,11 +34,12 @@ public class BestellungCommandController {
                     .gesamtpreis(bestellung.getGesamtpreis())
                     .build();
             commandGateway.send(cmd);
-            return ResponseEntity.ok("Bestellung " + bestellung +" is created.");
+            return ResponseEntity.ok("Bestellung " + bestellung + " is created.");
         });
     }
+
     @DeleteMapping("/bestellung/cancel/{bestellungId}")
-    public Mono<ResponseEntity<String>> cancelBestellung(@PathVariable String bestellungId){
+    public Mono<ResponseEntity<String>> cancelBestellung(@PathVariable String bestellungId) {
         return Mono.fromCallable(() -> {
             CancelBestellungCommand cmd = CancelBestellungCommand.builder().bestellungId(bestellungId).build();
             commandGateway.send(cmd);
@@ -46,16 +48,16 @@ public class BestellungCommandController {
     }
 
     @PutMapping("/bestellung/payed/{bestellungId}")
-    public Mono<ResponseEntity<String>> updatePayedBestellungStatus(@PathVariable String bestellungId){
+    public Mono<ResponseEntity<String>> updatePayedBestellungStatus(@PathVariable String bestellungId) {
         return Mono.fromCallable(() -> {
-                UpdatePayedOrSentBestellungCommand cmd = UpdatePayedOrSentBestellungCommand.builder().bestellungId(bestellungId).build();
+            UpdatePayedOrSentBestellungCommand cmd = UpdatePayedOrSentBestellungCommand.builder().bestellungId(bestellungId).build();
             commandGateway.send(cmd);
             return ResponseEntity.ok("Bestellung: " + bestellungId + " is now payed.");
         });
     }
 
     @PutMapping("/bestellung/sent/{bestellungId}")
-    public Mono<ResponseEntity<String>> updateSentBestellungStatus(@PathVariable String bestellungId){
+    public Mono<ResponseEntity<String>> updateSentBestellungStatus(@PathVariable String bestellungId) {
         return Mono.fromCallable(() -> {
             UpdatePayedOrSentBestellungCommand cmd = UpdatePayedOrSentBestellungCommand.builder().bestellungId(bestellungId).build();
             commandGateway.send(cmd);

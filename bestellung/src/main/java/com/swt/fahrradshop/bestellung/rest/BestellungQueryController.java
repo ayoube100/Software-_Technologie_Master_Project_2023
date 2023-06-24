@@ -20,18 +20,19 @@ public class BestellungQueryController {
 
     @Autowired
     private QueryGateway queryGateway;
+
     //with real time update
-    @GetMapping(value= "/bestellungen", produces ="text/event-stream")
-    public Flux<BestellungQueryModel> getBestellungen (){
-        FindBestellungenQuery qry = new FindBestellungenQuery() ;
+    @GetMapping(value = "/bestellungen", produces = "text/event-stream")
+    public Flux<BestellungQueryModel> getBestellungen() {
+        FindBestellungenQuery qry = new FindBestellungenQuery();
         return Mono.fromFuture(queryGateway.query(qry, ResponseTypes.multipleInstancesOf(BestellungQueryModel.class)))
                 .flatMapMany(Flux::fromIterable);
     }
 
 
-    @GetMapping(value= "/bestellungen/{bestellungId}")
-    public Mono<BestellungQueryModel> getBestellungById(@PathVariable String bestellungId){
+    @GetMapping(value = "/bestellungen/{bestellungId}")
+    public Mono<BestellungQueryModel> getBestellungById(@PathVariable String bestellungId) {
         FindBestellungByIdQuery qry = new FindBestellungByIdQuery(bestellungId);
-        return Mono.fromFuture(queryGateway.query(qry,BestellungQueryModel.class));
+        return Mono.fromFuture(queryGateway.query(qry, BestellungQueryModel.class));
     }
 }

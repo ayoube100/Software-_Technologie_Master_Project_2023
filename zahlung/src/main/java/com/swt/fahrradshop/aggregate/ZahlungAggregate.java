@@ -1,24 +1,26 @@
 package com.swt.fahrradshop.aggregate;
 
 import com.swt.fahrradshop.core.commands.ProcessZahlungCommand;
-import events.ZahlungProcessedEvent;
-import valueObject.KreditKarte;
-import valueObject.ZahlungsstatusEnum;
+import com.swt.fahrradshop.core.events.ZahlungProcessedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
-import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 import org.axonframework.spring.stereotype.Aggregate;
+import com.swt.fahrradshop.core.valueObject.KreditKarte;
+import com.swt.fahrradshop.core.valueObject.ZahlungsstatusEnum;
+
 import java.math.BigDecimal;
 import java.util.Random;
+
+import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
 @Aggregate
 public class ZahlungAggregate {
 
     @AggregateIdentifier
-    private  String zahlungId;
-    private  String bestellungId;
-    private  BigDecimal gesamtpreis;
+    private String zahlungId;
+    private String bestellungId;
+    private BigDecimal gesamtpreis;
     private KreditKarte kreditKarte;
     private ZahlungsstatusEnum zahlungsstatusEnum;
 
@@ -26,12 +28,12 @@ public class ZahlungAggregate {
     }
 
     @CommandHandler
-    public ZahlungAggregate(ProcessZahlungCommand cmd){
+    public ZahlungAggregate(ProcessZahlungCommand cmd) {
         //Mock the approval or denial of the payment
         Random random = new Random();
         boolean paymentApproved = random.nextBoolean();
 
-        if(paymentApproved){
+        if (paymentApproved) {
             apply(new ZahlungProcessedEvent(
                     cmd.getZahlungId(),
                     cmd.getBestellungId(),
@@ -39,7 +41,7 @@ public class ZahlungAggregate {
                     cmd.getKreditKarte(),
                     ZahlungsstatusEnum.BEZAHLT
             ));
-        }else{
+        } else {
             apply(new ZahlungProcessedEvent(
                     cmd.getZahlungId(),
                     cmd.getBestellungId(),
@@ -49,12 +51,13 @@ public class ZahlungAggregate {
             ));
         }
     }
+
     @EventSourcingHandler
-    public void on(ZahlungProcessedEvent  evt){
-            this.zahlungId =  evt.getZahlungId();
-            this.bestellungId = evt.getBestellungId();
-            this.gesamtpreis = evt.getGesamtpreis();
-            this.kreditKarte = evt.getKreditKarte();
-            this.zahlungsstatusEnum = evt.getZahlungsstatusEnum();
+    public void on(ZahlungProcessedEvent evt) {
+        this.zahlungId = evt.getZahlungId();
+        this.bestellungId = evt.getBestellungId();
+        this.gesamtpreis = evt.getGesamtpreis();
+        this.kreditKarte = evt.getKreditKarte();
+        this.zahlungsstatusEnum = evt.getZahlungsstatusEnum();
     }
 }

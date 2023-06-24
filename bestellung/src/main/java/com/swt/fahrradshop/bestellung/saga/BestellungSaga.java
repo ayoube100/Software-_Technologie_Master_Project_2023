@@ -1,35 +1,7 @@
 package com.swt.fahrradshop.bestellung.saga;
 
-import com.swt.fahrradshop.bestellung.command.CancelBestellungCommand;
-import com.swt.fahrradshop.bestellung.command.CreateBestellungCommand;
-import com.swt.fahrradshop.bestellung.command.UpdatePayedOrSentBestellungCommand;
-import com.swt.fahrradshop.bestellung.event.BestellungCanceledEvent;
-import com.swt.fahrradshop.bestellung.event.BestellungCreatedEvent;
-import com.swt.fahrradshop.bestellung.event.WarenkorbOrderedEvent;
-import com.swt.fahrradshop.bestellung.model.BestellungQueryModel;
-import com.swt.fahrradshop.bestellung.model.WarenkorbQueryModel;
-import com.swt.fahrradshop.bestellung.query.FindBestellungByIdQuery;
-import com.swt.fahrradshop.bestellung.query.FindWarenkorbByIdQuery;
-import com.swt.fahrradshop.bestellung.valueObject.BestellungsstatusEnum;
-import com.swt.fahrradshop.bestellung.valueObject.WarenkorbProdukt;
-import com.swt.fahrradshop.core.commands.ProcessZahlungCommand;
-import events.ZahlungProcessedEvent;
 import lombok.extern.slf4j.Slf4j;
-import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.axonframework.messaging.responsetypes.ResponseTypes;
-import org.axonframework.modelling.saga.EndSaga;
-import org.axonframework.modelling.saga.SagaEventHandler;
-import org.axonframework.modelling.saga.StartSaga;
-import org.axonframework.queryhandling.QueryGateway;
 import org.axonframework.spring.stereotype.Saga;
-import org.springframework.beans.factory.annotation.Autowired;
-import valueObject.KreditKarte;
-import valueObject.ZahlungsstatusEnum;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 @Saga
@@ -47,8 +19,6 @@ public class BestellungSaga {
 
         //get the KundeId from the Warenkob
         FindWarenkorbByIdQuery warenkorbByIdQuery = new FindWarenkorbByIdQuery(warenkorbOrderedEvent.getWarenkorbId());
-        //TODO -- Chaouite the query can throw an exception! try catch block needed here
-        // the catch should return; = Exit from the handle method and Compensation action should be performed
         WarenkorbQueryModel warenkorb= queryGateway.query(warenkorbByIdQuery, ResponseTypes.instanceOf(WarenkorbQueryModel.class)).join();
 
         //gesamtpreis mocked - supposed to be calculated in Frontend

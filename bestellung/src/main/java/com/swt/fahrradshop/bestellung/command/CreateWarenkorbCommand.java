@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
+
 import java.util.List;
 
 @Data
@@ -17,7 +18,7 @@ public class CreateWarenkorbCommand {
 
     private final String KundeId;
     //empty list of products while creating the Warenkorb
-    private final List<WarenkorbProdukt> produkte ;
+    private final List<WarenkorbProdukt> produkte;
     private final WarenkorbStatusEnum warenkorbStatus;
 
 }

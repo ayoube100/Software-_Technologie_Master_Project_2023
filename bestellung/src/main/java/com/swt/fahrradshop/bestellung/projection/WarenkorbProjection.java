@@ -11,6 +11,7 @@ import com.swt.fahrradshop.bestellung.valueObject.WarenkorbStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.eventhandling.EventHandler;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 @Slf4j
@@ -24,7 +25,7 @@ public class WarenkorbProjection {
     }
 
     @EventHandler
-    public void on(WarenkorbCreatedEvent evt){
+    public void on(WarenkorbCreatedEvent evt) {
         WarenkorbEntity warenkorb = new WarenkorbEntity(
                 evt.getWarenkorbId(),
                 evt.getKundeId(),
@@ -36,39 +37,37 @@ public class WarenkorbProjection {
 
     @EventHandler
     public void on(ProduktToWarenkorbAddedEvent evt) {
-            //get the warenkorb from DB
-            WarenkorbEntity warenkorbInDB = warenkorbRepository.findByWarenkorbId(evt.getWarenkorbId());
-            //get the list of products of that warenkorb
-            List<WarenkorbProdukt> produkteInWarenkorbListe = warenkorbInDB.getProdukteList();
-            Integer anzahlToBeAdded = evt.getAnzahl();
-            boolean found =false;
-            for( WarenkorbProdukt produkt:produkteInWarenkorbListe ){
-                if(produkt.getProduktId().equals(evt.getProduktId())){
-                    anzahlToBeAdded = anzahlToBeAdded + produkt.getProduktAnzahl();
-                    produkt.setProduktAnzahl(anzahlToBeAdded);
-                    found= true;
-                }
+        //get the warenkorb from DB
+        WarenkorbEntity warenkorbInDB = warenkorbRepository.findByWarenkorbId(evt.getWarenkorbId());
+        //get the list of products of that warenkorb
+        List<WarenkorbProdukt> produkteInWarenkorbListe = warenkorbInDB.getProdukteList();
+        Integer anzahlToBeAdded = evt.getAnzahl();
+        boolean found = false;
+        for (WarenkorbProdukt produkt : produkteInWarenkorbListe) {
+            if (produkt.getProduktId().equals(evt.getProduktId())) {
+                anzahlToBeAdded = anzahlToBeAdded + produkt.getProduktAnzahl();
+                produkt.setProduktAnzahl(anzahlToBeAdded);
+                found = true;
             }
-            if(found){
-                warenkorbInDB.setProdukteList(produkteInWarenkorbListe);
-            }
-            else{
-                WarenkorbProdukt produktToAdd= new WarenkorbProdukt(evt.getProduktId(), evt.getAnzahl());
-                warenkorbInDB.getProdukteList().add(produktToAdd);
-                warenkorbRepository.save(new WarenkorbEntity(
-                        warenkorbInDB.getWarenkorbId(),
-                        warenkorbInDB.getKundeId(),
-                        warenkorbInDB.getProdukteList(),
-                        warenkorbInDB.getWarenkorbStatus()));
-            }
+        }
+        if (found) {
             warenkorbInDB.setProdukteList(produkteInWarenkorbListe);
-            warenkorbRepository.save(warenkorbInDB);
+        } else {
+            WarenkorbProdukt produktToAdd = new WarenkorbProdukt(evt.getProduktId(), evt.getAnzahl());
+            warenkorbInDB.getProdukteList().add(produktToAdd);
+            warenkorbRepository.save(new WarenkorbEntity(
+                    warenkorbInDB.getWarenkorbId(),
+                    warenkorbInDB.getKundeId(),
+                    warenkorbInDB.getProdukteList(),
+                    warenkorbInDB.getWarenkorbStatus()));
+        }
+        warenkorbInDB.setProdukteList(produkteInWarenkorbListe);
+        warenkorbRepository.save(warenkorbInDB);
     }
 
 
-
     @EventHandler
-    public void on(ProduktFromWarenkorbDeletedEvent evt){
+    public void on(ProduktFromWarenkorbDeletedEvent evt) {
 
         //get the warenkorb from DB
         WarenkorbEntity warenkorbInDB = warenkorbRepository.findByWarenkorbId(evt.getWarenkorbId());
@@ -77,16 +76,17 @@ public class WarenkorbProjection {
 
         WarenkorbProdukt produktToRemove = null;
 
-        for( WarenkorbProdukt produkt:produkteInWarenkorbListe ){
-            if(produkt.getProduktId().equals(evt.getProduktId())){
-                if(produkt.getProduktAnzahl()>1){
-                Integer newAnzahl = produkt.getProduktAnzahl()-1;
-                produkt.setProduktAnzahl(newAnzahl);
-            }else{//when only one Produkt is left
+        for (WarenkorbProdukt produkt : produkteInWarenkorbListe) {
+            if (produkt.getProduktId().equals(evt.getProduktId())) {
+                if (produkt.getProduktAnzahl() > 1) {
+                    Integer newAnzahl = produkt.getProduktAnzahl() - 1;
+                    produkt.setProduktAnzahl(newAnzahl);
+                } else {//when only one Produkt is left
                     produktToRemove = produkt;
-            }}
+                }
+            }
         }
-        if(produktToRemove != null){
+        if (produktToRemove != null) {
             produkteInWarenkorbListe.remove(produktToRemove);
         }
         warenkorbInDB.setProdukteList(produkteInWarenkorbListe);
@@ -94,12 +94,11 @@ public class WarenkorbProjection {
     }
 
     @EventHandler
-    public void on(WarenkorbOrderedEvent evt){
+    public void on(WarenkorbOrderedEvent evt) {
         WarenkorbEntity warenkorbInDb = warenkorbRepository.findByWarenkorbId(evt.getWarenkorbId());
-        if(warenkorbInDb.getProdukteList().size()==0){
+        if (warenkorbInDb.getProdukteList().size() == 0) {
             log.warn("An empty Warenkorb can not be ordered!!");
-        }
-        else{
+        } else {
             warenkorbInDb.setWarenkorbStatus(WarenkorbStatusEnum.BESTELLT.toString());
         }
         warenkorbRepository.save(warenkorbInDb);

@@ -4,6 +4,7 @@ import com.swt.fahrradshop.bestellung.valueObject.BestellungsstatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+
 @Data
 @Builder
 @AllArgsConstructor

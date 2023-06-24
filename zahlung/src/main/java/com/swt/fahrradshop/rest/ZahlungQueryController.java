@@ -1,6 +1,5 @@
 package com.swt.fahrradshop.rest;
 
-import com.swt.fahrradshop.model.ZahlungQueryModel;
 import com.swt.fahrradshop.query.FindZahlungStatusByIdQuery;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +18,8 @@ public class ZahlungQueryController {
     }
 
     @GetMapping("/zahlung/{zahlungId}/status")
-    public Mono<String> getStatus(@PathVariable String zahlungId){
+    public Mono<String> getStatus(@PathVariable String zahlungId) {
         FindZahlungStatusByIdQuery qry = new FindZahlungStatusByIdQuery(zahlungId);
-        return Mono.fromFuture(queryGateway.query(qry,String.class));
+        return Mono.fromFuture(queryGateway.query(qry, String.class));
     }
 }

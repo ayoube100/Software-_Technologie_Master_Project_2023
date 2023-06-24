@@ -19,16 +19,17 @@ public class WarenkorbQueryController {
 
     @Autowired
     private QueryGateway queryGateway;
+
     @GetMapping("/warenkoerbe")
-    public Flux<WarenkorbQueryModel> getWarenkoerbe (){
+    public Flux<WarenkorbQueryModel> getWarenkoerbe() {
         FindWarenkoerbeQuery qry = new FindWarenkoerbeQuery();
         return Mono.fromFuture(queryGateway.query(qry, ResponseTypes.multipleInstancesOf(WarenkorbQueryModel.class)))
                 .flatMapMany((Flux::fromIterable));
     }
 
     @GetMapping("/warenkoerbe/{warenkorbId}")
-    public Mono<WarenkorbQueryModel> getWarenkorbById(@PathVariable String warenkorbId){
+    public Mono<WarenkorbQueryModel> getWarenkorbById(@PathVariable String warenkorbId) {
         FindWarenkorbByIdQuery qry = new FindWarenkorbByIdQuery(warenkorbId);
-        return  Mono.fromFuture(queryGateway.query(qry, WarenkorbQueryModel.class));
+        return Mono.fromFuture(queryGateway.query(qry, WarenkorbQueryModel.class));
     }
 }

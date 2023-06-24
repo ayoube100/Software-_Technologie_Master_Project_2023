@@ -1,7 +1,12 @@
 package com.swt.fahrradshop.bestellung.entity;
 
-import lombok.*;
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Data
@@ -9,7 +14,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(name = "bestellungen")
-public class BestellungEntity  {
+public class BestellungEntity {
 
     @Id
     private String bestellungId;

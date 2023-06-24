@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,6 @@ public class WarenkorbQueryHandler {
     public List<WarenkorbQueryModel> findWarenkoerbe(FindWarenkoerbeQuery qry) {
         List<WarenkorbQueryModel> warenkoerbe = new ArrayList<>();
         List<WarenkorbEntity> warenkoerbeInDB = warenkorbRepository.findAll();
-
-        //TODO-- chaouite: check if list of Bestellungen is empty
 
         for (WarenkorbEntity warenkorb : warenkoerbeInDB) {
             //for lazy loading
@@ -43,7 +42,7 @@ public class WarenkorbQueryHandler {
 
     @QueryHandler
     @Transactional
-    public WarenkorbQueryModel getWarenkorbById(FindWarenkorbByIdQuery qry){
+    public WarenkorbQueryModel getWarenkorbById(FindWarenkorbByIdQuery qry) {
         WarenkorbEntity warenkorbInDB = warenkorbRepository.findByWarenkorbId(qry.getWarenkorbId());
         //for lazy loading
         warenkorbInDB.getProdukteList().size();

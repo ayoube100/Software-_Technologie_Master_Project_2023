@@ -10,6 +10,7 @@ import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,30 +22,30 @@ public class BestellungQueryHandler {
     private BestellungRepository bestellungRepository;
 
     @QueryHandler
-    public List<BestellungQueryModel> findBestellungen(FindBestellungenQuery qry){
+    public List<BestellungQueryModel> findBestellungen(FindBestellungenQuery qry) {
         List<BestellungQueryModel> bestellungen = new ArrayList<>();
 
         List<BestellungEntity> bestellungenInDB = bestellungRepository.findAll();
 
-        if(bestellungenInDB.size() == 0){
+        if (bestellungenInDB.size() == 0) {
             log.info("Bestellungen DB is empty");
-        }
-        else{
-            for (BestellungEntity bestellung : bestellungenInDB){
+        } else {
+            for (BestellungEntity bestellung : bestellungenInDB) {
                 BestellungQueryModel bestellungQueryModel = new BestellungQueryModel();
                 BeanUtils.copyProperties(
-                        bestellung,bestellungQueryModel
+                        bestellung, bestellungQueryModel
                 );
                 bestellungen.add(bestellungQueryModel);
-            }}
+            }
+        }
         return bestellungen;
     }
 
     @QueryHandler
-    public BestellungQueryModel findBestellungById(FindBestellungByIdQuery qry){
-        BestellungEntity bestellungInDB=bestellungRepository.findByBestellungId(qry.getBestellungToBeFoundId());
+    public BestellungQueryModel findBestellungById(FindBestellungByIdQuery qry) {
+        BestellungEntity bestellungInDB = bestellungRepository.findByBestellungId(qry.getBestellungToBeFoundId());
         BestellungQueryModel bestellung = new BestellungQueryModel();
-        BeanUtils.copyProperties(bestellungInDB,bestellung);
+        BeanUtils.copyProperties(bestellungInDB, bestellung);
         return bestellung;
     }
 

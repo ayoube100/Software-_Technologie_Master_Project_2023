@@ -20,7 +20,7 @@ public class BestellungProjection {
     }
 
     @EventHandler
-    public void on(BestellungCreatedEvent evt){
+    public void on(BestellungCreatedEvent evt) {
 
         BestellungEntity bestellung = new BestellungEntity(
                 evt.getBestellungId(),
@@ -33,13 +33,13 @@ public class BestellungProjection {
     }
 
     @EventHandler
-    public void on(BestellungCanceledEvent evt){
+    public void on(BestellungCanceledEvent evt) {
         bestellungRepository.deleteById(evt.getBestellungId());
     }
 
     @EventHandler
-    public void on(PayedOrSentBestellungUpdatedEvent evt){
-       BestellungEntity bestellung =  bestellungRepository.findByBestellungId(evt.getBestellungId());
+    public void on(PayedOrSentBestellungUpdatedEvent evt) {
+        BestellungEntity bestellung = bestellungRepository.findByBestellungId(evt.getBestellungId());
         bestellung.setBestellungsstatus(evt.getBestellungsstatusEnum().toString());
     }
 
