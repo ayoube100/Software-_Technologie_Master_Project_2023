@@ -7,17 +7,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="bestellung" />
-        <module name="api-gateway" />
-        <module name="zahlung" />
         <module name="core" />
         <module name="discovery-server" />
+        <module name="bestellung" />
+        <module name="api-gateway" />
+        <module name="Katalog" />
+        <module name="zahlung" />
         <module name="logistik" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="katalog" target="1.5" />
-      <module name="Katalog" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
