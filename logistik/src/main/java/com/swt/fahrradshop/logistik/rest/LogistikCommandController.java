@@ -27,7 +27,7 @@ public class LogistikCommandController {
         return Mono.fromCallable(() -> {
             CreateLogistikCommand cmd = CreateLogistikCommand.builder()
                     .logistikId(UUID.randomUUID().toString())
-                    .lieferstatusEnum(LieferstatusEnum.AUSSTEHEND)
+                    .lieferstatusEnum(LieferstatusEnum.BEARBEITET)
                     .bestellungId(logistik.getBestellungId())
                     .build();
             commandGateway.send(cmd);

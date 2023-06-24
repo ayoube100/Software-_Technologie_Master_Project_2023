@@ -2,7 +2,7 @@ package com.swt.fahrradshop.logistik.valueObject;
 
 public enum LieferstatusEnum {
     AUSSTEHEND,
-    BEARBEITET,
+    BEARBEITET, // ist bereits Bezahlt
     VERSENDET,
     STORNIERT,
     ZUGESTELT,
