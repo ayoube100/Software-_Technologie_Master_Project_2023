@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class BestellungCreatedEvent {
 
-    @TargetAggregateIdentifier
+   // @TargetAggregateIdentifier
     private  String bestellungId;
 
     private BestellungsstatusEnum bestellungsstatus;

@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BestellungRepository extends JpaRepository<BestellungEntity,String> {
     BestellungEntity findByBestellungId(String bestellungId);
+   // BestellungEntity findByColumnValue(String columnValue);
     
 }

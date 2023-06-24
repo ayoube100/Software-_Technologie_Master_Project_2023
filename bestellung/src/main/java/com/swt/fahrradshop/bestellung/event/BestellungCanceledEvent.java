@@ -11,6 +11,6 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BestellungCanceledEvent {
-    @TargetAggregateIdentifier
+    //@TargetAggregateIdentifier
     private String bestellungId;
 }
