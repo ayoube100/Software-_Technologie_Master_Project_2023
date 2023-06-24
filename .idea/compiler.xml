@@ -7,18 +7,28 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="bestellung" />
         <module name="api-gateway" />
-        <module name="katalog" />
+        <module name="zahlung" />
+        <module name="core" />
         <module name="discovery-server" />
         <module name="logistik" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="katalog" target="17" />
+      <module name="Katalog" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Katalog" options="-parameters" />
       <module name="api-gateway" options="-parameters" />
+      <module name="bestellung" options="-parameters" />
+      <module name="core" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="katalog" options="-parameters" />
+      <module name="zahlung" options="-parameters" />
       <module name="logistik" options="-parameters" />
     </option>
   </component>
