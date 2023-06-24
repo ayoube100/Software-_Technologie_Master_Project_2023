@@ -12,7 +12,6 @@ import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
-import java.math.BigDecimal;
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 import static org.axonframework.modelling.command.AggregateLifecycle.markDeleted;
 
@@ -22,8 +21,9 @@ public class LogistikAggregate {
 
     @AggregateIdentifier
     private String logistikId;
-    private LieferstatusEnum lieferstatusEnum;
+
     private String bestellungId;
+    private LieferstatusEnum lieferstatusEnum;
 
     public LogistikAggregate() {
     }
@@ -34,7 +34,9 @@ public class LogistikAggregate {
     //triggered when commandGateway saved command
     @CommandHandler
     public LogistikAggregate(CreateLogistikCommand cmd) {
-        apply( new LogistikCreatedEvent());
+        apply( new LogistikCreatedEvent(cmd.getLogistikId(),
+        cmd.getBestellungId(),
+        cmd.getLieferstatusEnum()));
     }
 
     /**

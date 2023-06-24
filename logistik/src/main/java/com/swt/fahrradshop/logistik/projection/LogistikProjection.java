@@ -24,8 +24,8 @@ public class LogistikProjection {
 
         LogistikEntity logistik = new LogistikEntity(
                 evt.getLogistikId(),
-                evt.getLieferstatus().toString(),
-                evt.getBestellungId()
+                evt.getBestellungId(),
+                evt.getLieferstatus().toString()
         );
         logistikRepository.save(logistik);
     }
