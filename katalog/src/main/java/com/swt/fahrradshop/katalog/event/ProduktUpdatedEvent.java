@@ -15,10 +15,11 @@ import java.util.UUID;
 public class ProduktUpdatedEvent {
 
     @TargetAggregateIdentifier
-    private UUID produktId;
+    private String produktId;
     private String newName;
     private BigDecimal newPreis;
     private BigDecimal newAnzahl;
     private Kategorie newKategorie;
     private Verfuegbarkeit newVerfuegbarkeit;
+    private BigDecimal newAnzahlToReserve;
 }

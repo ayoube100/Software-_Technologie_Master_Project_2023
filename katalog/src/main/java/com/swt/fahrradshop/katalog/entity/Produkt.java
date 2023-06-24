@@ -11,22 +11,30 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
+@Table(name="PRODUKTE")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "produkt")
 public class Produkt {
     @Id
-    private UUID id;
+    @Column(name = "PRODUKT_ID")
+    private String id;
+    @Column(name = "NAME")
     private String Name;
+    @Column(name = "PREIS")
     private BigDecimal Preis;
+    @Column(name = "ANZAHL")
     private BigDecimal Anzahl;
-
+    @Column(name = "KATEGORIE")
     // this will heplp to display the enum as a string in the DB
     @Enumerated(EnumType.STRING)
     private Kategorie Kategorie;
+    @Column(name = "VERFUEGBARKEIT")
     @Enumerated(EnumType.STRING)
     private Verfuegbarkeit Verfuegbarkeit;
+    @Column (name ="ANZAHL_TO_RESERVE")
+    private BigDecimal AnzahlToReserve;
+
 
 
 

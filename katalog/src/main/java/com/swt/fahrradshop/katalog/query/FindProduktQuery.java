@@ -11,6 +11,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class FindProduktQuery {
 
-    private UUID    produktId;
+    private String    produktId;
 
 }

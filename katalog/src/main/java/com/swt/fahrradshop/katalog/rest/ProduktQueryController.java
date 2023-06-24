@@ -22,9 +22,9 @@ public class ProduktQueryController {
         return this.produktQueryService.findById(produktId);
     }
 
-    @GetMapping("/{accountId}/events")
-    public List<Object> listEventsForProdukt(@PathVariable(value = "produktId") String produktId) {
-        return this.produktQueryService.listEventsForAccount(produktId);
+    @GetMapping("/katalog/produkte")
+    public List<Produkt> findAll() {
+        return (List<Produkt>) this.produktQueryService.findAllProdukte();
     }
 
 

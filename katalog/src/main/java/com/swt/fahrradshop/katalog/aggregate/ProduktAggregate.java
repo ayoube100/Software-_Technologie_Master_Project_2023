@@ -1,15 +1,7 @@
 package com.swt.fahrradshop.katalog.aggregate;
 
-import com.swt.fahrradshop.katalog.command.CreateProduktCommand;
-import com.swt.fahrradshop.katalog.command.DeleteProduktCommand;
-import com.swt.fahrradshop.katalog.command.ReservationProduktsCommand;
-import com.swt.fahrradshop.katalog.command.UpdateProduktCommand;
-import com.swt.fahrradshop.katalog.event.ProduktCreatedEvent;
-import com.swt.fahrradshop.katalog.event.ProduktDeletedEvent;
-import com.swt.fahrradshop.katalog.event.ProduktUpdatedEvent;
-import com.swt.fahrradshop.katalog.event.ProduktsReservedEvent;
-import com.swt.fahrradshop.katalog.exceptions.InsufficientQuantityException;
-import com.swt.fahrradshop.katalog.valueObject.ProduktDetails;
+import com.swt.fahrradshop.katalog.command.*;
+import com.swt.fahrradshop.katalog.event.*;
 import com.swt.fahrradshop.katalog.valueObject.Verfuegbarkeit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,12 +12,7 @@ import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 import com.swt.fahrradshop.katalog.valueObject.Kategorie;
-
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
-
-import static com.swt.fahrradshop.katalog.valueObject.Verfuegbarkeit.VERFUEGBAR;
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 import static org.axonframework.modelling.command.AggregateLifecycle.markDeleted;
 
@@ -36,73 +23,60 @@ import static org.axonframework.modelling.command.AggregateLifecycle.markDeleted
 //this aggregate receives and handles the Commands and for every Command will dispatch a Query.
 public class ProduktAggregate {
     @AggregateIdentifier
-    private UUID produktId;
+    private String produktId;
     private String Name;
     private BigDecimal Preis;
     private BigDecimal Anzahl;
     private Kategorie Kategorie;
     private Verfuegbarkeit Verfuegbarkeit;
-
+    private BigDecimal AnzahlToReserve;
 
 
     @CommandHandler
     public ProduktAggregate(CreateProduktCommand command){
         // this is an Axon annotation used to notify the ProduktAggregate that a new Produkt was creating by publishing a ProduktCreatedEvent
-        apply(
+        AggregateLifecycle.apply(
                 new ProduktCreatedEvent(
                         command.getProduktId(),
                         command.getName(),
                         command.getPreis(),
                         command.getAnzahl(),
                         command.getKategorie(),
-                        command.getVerfuegbarkeit()
+                        command.getVerfuegbarkeit(),
+                        command.getAnzahlToReserve()
 
                 )
         );
 
     }
     @CommandHandler
-    public ProduktAggregate(UpdateProduktCommand command){
+    public void handle(UpdateProduktCommand command){
 
                       //this is an Axon annotation used to apply the event to the ProduktAggregate
-                      apply(new UpdateProduktCommand(
+                      AggregateLifecycle.apply(new ProduktUpdatedEvent(
                               command.getProduktId(),
                               command.getNewName(),
                               command.getNewPreis(),
                               command.getNewAnzahl(),
                               command.getNewKategorie(),
-                              command.getNewVerfuegbarkeit()));
+                              command.getNewVerfuegbarkeit(),
+                              command.getNewAnzahlToReserve()));
 
     }
 
     @CommandHandler
     public void handle(DeleteProduktCommand command) {
-        apply(new ProduktDeletedEvent(command.getProduktId()));
+        AggregateLifecycle.apply(new ProduktDeletedEvent(command.getProduktId()));
     }
-    @CommandHandler
-    public void handle(ReservationProduktsCommand command) {
-        List<ProduktDetails> ProduktDetailsList = command.getProduktDetails();
+   @CommandHandler
+   public void handle(ReservationProduktCommand command) {
+       apply(new ProduktReservedEvent(command.getProduktId(),command.getAnzahlToReserve()));}
 
-        for (ProduktDetails produktDetails : ProduktDetailsList) {
-            UUID bestellungId = command.getBestellungId();
-            UUID produktId = produktDetails.getId();
-            BigDecimal AnzahlToReserve = produktDetails.getAnzahl();
-            // Perform validation and business logic checks for each product
-            if (Verfuegbarkeit.VERFUEGBAR.equals(produktDetails.getVerfuegbarkeit())) {
-                if (Anzahl.compareTo(AnzahlToReserve) >= 0) {
-                    // Sufficient quantity available, reserve the product
-                    apply(new ProduktsReservedEvent(bestellungId, List.of(produktDetails)));
-                }
+       @CommandHandler
+       public void handle(UnreserveProduktCommand command){
+           apply (new ProduktUnreservedEvent(command.getProduktId(),command.getAnzahlToReserve()));
 
-                //TODO HANDLING Exceptions
-            }
-        }
-    }
-
-
-
-
-
+       }
 
 @EventSourcingHandler
     public void on(ProduktCreatedEvent event){
@@ -113,6 +87,7 @@ public class ProduktAggregate {
         this.Anzahl=event.getAnzahl();
         this.Kategorie=event.getKategorie();
         this.Verfuegbarkeit=event.getVerfuegbarkeit();
+        this.AnzahlToReserve=event.getAnzahlToReserve();
 
     }
     @EventSourcingHandler
@@ -124,33 +99,26 @@ public class ProduktAggregate {
         this.Anzahl=event.getNewAnzahl();
         this.Kategorie=event.getNewKategorie();
         this.Verfuegbarkeit=event.getNewVerfuegbarkeit();
+        this.AnzahlToReserve=event.getNewAnzahl();
     }
     @EventSourcingHandler
     public void on(ProduktDeletedEvent event) {
        markDeleted();
     }
-    @EventSourcingHandler
-    public void on(ProduktsReservedEvent event) {
+   @EventSourcingHandler
+    public void on(ProduktReservedEvent event) {
+        this.produktId=event.getProduktId();
+        this.AnzahlToReserve=BigDecimal.valueOf(event.getAnzahlToReserve());
 
-        UUID bestellungId = event.getBestellungId();
-        List<ProduktDetails> reservedProduktDetails = event.getProduktDetails();
-        for (ProduktDetails produktDetails : reservedProduktDetails) {
-            UUID produktId = produktDetails.getId();
-            BigDecimal reservedAnzahl = produktDetails.getAnzahl();
-            if (this.produktId.equals(produktId)) {
-                // Update the availability and reduce the quantity
-                this.Verfuegbarkeit = Verfuegbarkeit.NICHT_VERFUEGBAR;
-                this.Anzahl = this.Anzahl.subtract(reservedAnzahl);
-            }
+      }
+      @EventSourcingHandler
+public void on (ProduktUnreservedEvent event){
+    this.produktId=event.getProduktId();
 
-
-        }
+      }
 
     }
 
 
 
 
-
-
-    }

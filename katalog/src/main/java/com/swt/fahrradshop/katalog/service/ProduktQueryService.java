@@ -2,6 +2,7 @@ package com.swt.fahrradshop.katalog.service;
 
 import com.swt.fahrradshop.katalog.entity.Produkt;
 import com.swt.fahrradshop.katalog.query.FindProduktQuery;
+import com.swt.fahrradshop.katalog.query.FindProdukteQuery;
 import lombok.AllArgsConstructor;
 import org.axonframework.eventsourcing.eventstore.EventStore;
 import org.axonframework.messaging.Message;
@@ -23,16 +24,16 @@ public class ProduktQueryService {
 
     public CompletableFuture<Produkt> findById(String produktId) {
         return this.queryGateway.query(
-                new FindProduktQuery(UUID.fromString(produktId)),
+                new FindProduktQuery(produktId),
                 ResponseTypes.instanceOf(Produkt.class)
         );
     }
 
-    public List<Object> listEventsForAccount(String produktId) {
-        return this.eventStore
-                .readEvents(produktId.toString())
-                .asStream()
-                .map(Message::getPayload)
-                .collect(Collectors.toList());
+    public CompletableFuture<List<Produkt>> findAllProdukte(){
+
+        return this.queryGateway.query(new FindProdukteQuery(),
+                ResponseTypes.multipleInstancesOf(Produkt.class)
+
+        );
     }
 }

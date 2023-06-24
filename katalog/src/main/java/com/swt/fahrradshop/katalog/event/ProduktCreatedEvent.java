@@ -15,12 +15,13 @@ import java.util.UUID;
 // this event will notify that a ProduktCreateCommand is received
 public class ProduktCreatedEvent {
     @TargetAggregateIdentifier
-    private UUID produktId;
+    private String produktId;
     private String Name;
     private BigDecimal Preis;
     private BigDecimal Anzahl;
     private Kategorie Kategorie;
     private Verfuegbarkeit Verfuegbarkeit;
+    private BigDecimal AnzahlToReserve;
 
 
 }

@@ -14,4 +14,5 @@ public class ProduktDto {
     private BigDecimal Anzahl;
     private Kategorie Kategorie;
     private Verfuegbarkeit Verfuegbarkeit;
+    private BigDecimal AnzahlToReserve;
 }
