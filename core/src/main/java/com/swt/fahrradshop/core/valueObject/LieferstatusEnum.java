@@ -1,4 +1,4 @@
-package com.swt.fahrradshop.logistik.valueObject;
+package com.swt.fahrradshop.core.valueObject;
 
 public enum LieferstatusEnum {
     AUSSTEHEND,

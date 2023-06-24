@@ -1,12 +1,12 @@
 package com.swt.fahrradshop.logistik.aggregate;
 
-import com.swt.fahrradshop.logistik.command.CancelLogistikCommand;
-import com.swt.fahrradshop.logistik.command.CreateLogistikCommand;
-import com.swt.fahrradshop.logistik.command.SendShippingCommand;
-import com.swt.fahrradshop.logistik.event.LogistikCanceledEvent;
-import com.swt.fahrradshop.logistik.event.LogistikCreatedEvent;
-import com.swt.fahrradshop.logistik.event.SendShippingEvent;
-import com.swt.fahrradshop.logistik.valueObject.*;
+import com.swt.fahrradshop.core.commands.CreateLogistikCommand;
+import com.swt.fahrradshop.core.valueObject.LieferstatusEnum;
+import com.swt.fahrradshop.core.commands.CancelLogistikCommand;
+import com.swt.fahrradshop.core.commands.SendShippingCommand;
+import com.swt.fahrradshop.core.events.LogistikCanceledEvent;
+import com.swt.fahrradshop.core.events.LogistikCreatedEvent;
+import com.swt.fahrradshop.core.events.ShippingSentEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -28,9 +28,6 @@ public class LogistikAggregate {
     public LogistikAggregate() {
     }
 
-    /**
-     * create a new Logistik
-     **/
     //triggered when commandGateway saved command
     @CommandHandler
     public LogistikAggregate(CreateLogistikCommand cmd) {
@@ -39,9 +36,7 @@ public class LogistikAggregate {
         cmd.getLieferstatusEnum()));
     }
 
-    /**
-     * Cancel a Logistik
-     **/
+
     @CommandHandler
     public void handle(CancelLogistikCommand cmd) {
 
@@ -51,17 +46,18 @@ public class LogistikAggregate {
     @CommandHandler
     public void handle(SendShippingCommand cmd){
         if(this.lieferstatusEnum.toString().equals("BEARBEITET"))
-        apply(new SendShippingEvent(
+        apply(new ShippingSentEvent(
                 cmd.getLogistikId(),
+                cmd.getBestellungId(),
                 LieferstatusEnum.VERSENDET));
         else {
-            apply(new SendShippingEvent(
+            apply(new ShippingSentEvent(
                     cmd.getLogistikId(),
+                    cmd.getBestellungId(),
                     LieferstatusEnum.STORNIERT));
         }
     }
 
-    //triggered when event dispatched => actualize the state of the aggregate
     @EventSourcingHandler
     public void on(LogistikCreatedEvent evt) throws Exception {
         this.logistikId = evt.getLogistikId();
@@ -75,7 +71,7 @@ public class LogistikAggregate {
     }
 
     @EventSourcingHandler
-    public void on(SendShippingEvent evt){
+    public void on(ShippingSentEvent evt){
         this.logistikId = evt.getLogistikId();
         this.lieferstatusEnum = evt.getLieferstatusEnum();
     }

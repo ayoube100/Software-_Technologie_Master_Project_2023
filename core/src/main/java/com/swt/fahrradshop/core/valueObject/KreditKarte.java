@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Embeddable
 public class KreditKarte {
-    //TODO: chaouite validate the fields - can be done in Frontend from
     private String number;
     private String holder;
     private String expDate;

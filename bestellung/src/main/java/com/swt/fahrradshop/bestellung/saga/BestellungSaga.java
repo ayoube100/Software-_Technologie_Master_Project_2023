@@ -1,25 +1,57 @@
 package com.swt.fahrradshop.bestellung.saga;
 
+import com.swt.fahrradshop.bestellung.command.CancelBestellungCommand;
+import com.swt.fahrradshop.bestellung.command.CreateBestellungCommand;
+import com.swt.fahrradshop.bestellung.command.UpdatePayedOrSentBestellungCommand;
+import com.swt.fahrradshop.bestellung.event.BestellungCanceledEvent;
+import com.swt.fahrradshop.bestellung.event.BestellungCreatedEvent;
+import com.swt.fahrradshop.bestellung.event.WarenkorbOrderedEvent;
+import com.swt.fahrradshop.bestellung.model.BestellungQueryModel;
+import com.swt.fahrradshop.bestellung.model.WarenkorbQueryModel;
+import com.swt.fahrradshop.bestellung.query.FindWarenkorbByIdQuery;
+import com.swt.fahrradshop.bestellung.valueObject.BestellungsstatusEnum;
+import com.swt.fahrradshop.bestellung.valueObject.WarenkorbProdukt;
+import com.swt.fahrradshop.core.commands.CancelLogistikCommand;
+import com.swt.fahrradshop.core.commands.CreateLogistikCommand;
+import com.swt.fahrradshop.core.commands.ProcessZahlungCommand;
+import com.swt.fahrradshop.core.commands.SendShippingCommand;
+import com.swt.fahrradshop.core.events.LogistikCanceledEvent;
+import com.swt.fahrradshop.core.events.LogistikCreatedEvent;
+import com.swt.fahrradshop.core.events.ShippingSentEvent;
+import com.swt.fahrradshop.core.events.ZahlungProcessedEvent;
+import com.swt.fahrradshop.core.valueObject.KreditKarte;
+import com.swt.fahrradshop.core.valueObject.ZahlungsstatusEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.messaging.responsetypes.ResponseTypes;
+import org.axonframework.modelling.saga.EndSaga;
+import org.axonframework.modelling.saga.SagaEventHandler;
+import org.axonframework.modelling.saga.StartSaga;
+import org.axonframework.queryhandling.QueryGateway;
 import org.axonframework.spring.stereotype.Saga;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Saga
 public class BestellungSaga {
-
-   /* @Autowired
+    @Autowired
     private transient CommandGateway commandGateway;
     @Autowired
     private transient QueryGateway queryGateway;
 
-    ********************Saga start*********************
+    //********************Saga start*********************
     @StartSaga
     @SagaEventHandler(associationProperty = "warenkorbId")
     public void handle(WarenkorbOrderedEvent warenkorbOrderedEvent){
 
         //get the KundeId from the Warenkob
         FindWarenkorbByIdQuery warenkorbByIdQuery = new FindWarenkorbByIdQuery(warenkorbOrderedEvent.getWarenkorbId());
-        WarenkorbQueryModel warenkorb= queryGateway.query(warenkorbByIdQuery, ResponseTypes.instanceOf(WarenkorbQueryModel.class)).join();
+        WarenkorbQueryModel warenkorb= queryGateway.query(warenkorbByIdQuery,
+                ResponseTypes.instanceOf(WarenkorbQueryModel.class)).join();
 
         //gesamtpreis mocked - supposed to be calculated in Frontend
         BigDecimal gesamtpreis = BigDecimal.valueOf(1235);
@@ -38,7 +70,7 @@ public class BestellungSaga {
         //-----------------------------------------Send command
         commandGateway.send(createBestellungCommand, (commandResult,throwable)->{
             //-----------exception raised
-            if(throwable.isExceptional()){
+            if(throwable != null){
                 log.info("createBestellungCommand was not successful: "+ throwable.exceptionResult().getMessage());
 
                 CancelBestellungCommand cancelBestellungCommand = new CancelBestellungCommand(createBestellungCommand.getBestellungId());
@@ -63,7 +95,7 @@ public class BestellungSaga {
         //TODO: Ayoub-> ReserveProdukteListeCommand + UnreserveProdukteListeCommand
         //--------------One way if we have a list
 
-      ReserveProdukteListeCommand reserveProdukteListeCommand = ReserveProdukteListeCommand(bestellungId,produkteList);
+     /* ReserveProdukteListeCommand reserveProdukteListeCommand = ReserveProdukteListeCommand(bestellungId,produkteList);
         commandGateway.send(reserveProdukteListeCommand, (commandResult,throwable)->{
             if(throwable != null){
                     log.info("Reserving produkteListe : " + produkteList +
@@ -76,11 +108,11 @@ public class BestellungSaga {
                 log.info("Reserving produkteListe : " + produkteList +
                         " was successful");
             }
-        });
+        });*/
 
         //--------------other way if we don't have a list Not good to use for loop in saga
 
-        //TODO: Ayoub-> ReserveProduktCommand + UnreserveProduktCommand
+       /* //TODO: Ayoub-> ReserveProduktCommand + UnreserveProduktCommand
         AtomicBoolean cancelReservation = new AtomicBoolean(false);// Mutable boolean reference - to use it inside callback
         // Try to reserve each produkt based on id and anzahl
         for(WarenkorbProdukt produkt: produkteList){
@@ -112,11 +144,11 @@ public class BestellungSaga {
                 ZahlungsstatusEnum.IN_BEARBEITUNG
                  );
                  commandGateway.send(processZahlungCommand);
-        }
+        }*/
     }
 
 
-    @SagaEventHandler(associationProperty = "bestellungId")
+   /* @SagaEventHandler(associationProperty = "bestellungId")
     public void handle(ProdukteListeReservedEvent   produkteListeReservedEvent){
 
         FindBestellungByIdQuery bestellungByIdQuery = new FindBestellungByIdQuery(produkteListeReservedEvent.getBestellungId());
@@ -138,8 +170,8 @@ public class BestellungSaga {
                 ZahlungsstatusEnum.IN_BEARBEITUNG
         );
         commandGateway.send(processZahlungCommand);
-    }
-    @SagaEventHandler(associationProperty = "bestellungId")
+    }*/
+/*    @SagaEventHandler(associationProperty = "bestellungId")
     public void handle(ZahlungProcessedEvent zahlungProcessedEvent){
 
         if(zahlungProcessedEvent.getZahlungsstatusEnum().equals(ZahlungsstatusEnum.ABGELEHNT)){
@@ -169,8 +201,8 @@ public class BestellungSaga {
 
     @SagaEventHandler(associationProperty = "bestellungId")
     public void handle(LogistikCreatedEvent logistikCreatedEvent){
-        SendLogistikCommand sendLogistikCommand = new SendLogistikCommand(logistikCreatedEvent.getBestellungId());
-        commandGateway.send(sendLogistikCommand, ((commandMessage, throwable) -> {
+        SendShippingCommand sendShippingCommand = new SendShippingCommand(logistikCreatedEvent.getBestellungId());
+        commandGateway.send(sendShippingCommand, ((commandMessage, throwable) -> {
             if(throwable != null){
                 log.info("Stock issues!!");
                 CancelLogistikCommand cancelLogistikCommand = new CancelLogistikCommand(zahlungProcessedEvent.getBestellungId());
@@ -180,15 +212,15 @@ public class BestellungSaga {
                 log.info("Bestellung on its way.");
             }
         }));
-    }
+    }*/
 
-    ********************Saga Ends*********************
+    //********************Saga Ends*********************
     @EndSaga
     @SagaEventHandler(associationProperty = "bestellungId")
-    public void handle(LogistikSentEvent logistikSentEvent){
-        UpdatePayedOrSentBestellungCommand sentBestellungCommand = new UpdatePayedOrSentBestellungCommand(logistikSentEvent.getBestellungId());
+    public void handle(ShippingSentEvent shippingSentEvent){
+        UpdatePayedOrSentBestellungCommand sentBestellungCommand = new UpdatePayedOrSentBestellungCommand(shippingSentEvent.getBestellungId());
         commandGateway.send(sentBestellungCommand);
-        log.info("Bestellung Saga successfully finished for: "+logistikSentEvent.getBestellungId());
+        log.info("Bestellung Saga successfully finished for: "+shippingSentEvent.getBestellungId());
     }
     @EndSaga
     @SagaEventHandler(associationProperty = "bestellungId")
@@ -202,11 +234,11 @@ public class BestellungSaga {
         log.info("Bestellung Saga aborted for: "+ bestellungCanceledEvent.getBestellungId());
     }
 
-    @EndSaga
+   /* @EndSaga
     @SagaEventHandler(associationProperty = "bestellungId")
     public void handle(ProdukteListeUnreservedEvent produkteListeUnreservedEvent){
         log.info("Bestellung Saga aborted for: "+ produkteListeUnreservedEvent.getBestellungId()+
                 ". Unable to reserve Produkte.");
-    }
-*/
+    }*/
+
 }

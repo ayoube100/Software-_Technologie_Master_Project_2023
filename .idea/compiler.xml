@@ -16,7 +16,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="katalog" target="17" />
+      <module name="katalog" target="1.5" />
       <module name="Katalog" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -28,8 +28,8 @@
       <module name="core" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="katalog" options="-parameters" />
-      <module name="zahlung" options="-parameters" />
       <module name="logistik" options="-parameters" />
+      <module name="zahlung" options="-parameters" />
     </option>
   </component>
 </project>
