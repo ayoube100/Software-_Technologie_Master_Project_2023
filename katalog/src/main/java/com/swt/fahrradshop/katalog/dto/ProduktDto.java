@@ -1,5 +1,7 @@
 package com.swt.fahrradshop.katalog.dto;
 
+import com.swt.fahrradshop.katalog.valueObject.Kategorie;
+import com.swt.fahrradshop.katalog.valueObject.Verfuegbarkeit;
 import lombok.Value;
 
 import java.math.BigDecimal;
@@ -8,5 +10,8 @@ import java.math.BigDecimal;
 public class ProduktDto {
 
     private String Name;
-    private BigDecimal Price;
+    private BigDecimal Preis;
+    private BigDecimal Anzahl;
+    private Kategorie Kategorie;
+    private Verfuegbarkeit Verfuegbarkeit;
 }

@@ -1,4 +1,5 @@
 package com.swt.fahrradshop.katalog.event;
+
 import com.swt.fahrradshop.katalog.valueObject.Kategorie;
 import com.swt.fahrradshop.katalog.valueObject.Verfuegbarkeit;
 import lombok.AllArgsConstructor;
@@ -8,19 +9,16 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 import java.math.BigDecimal;
 import java.util.UUID;
-
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-// this event will notify that a ProduktCreateCommand is received
-public class ProduktCreatedEvent {
+@AllArgsConstructor
+public class ProduktUpdatedEvent {
+
     @TargetAggregateIdentifier
     private UUID produktId;
-    private String Name;
-    private BigDecimal Preis;
-    private BigDecimal Anzahl;
-    private Kategorie Kategorie;
-    private Verfuegbarkeit Verfuegbarkeit;
-
-
+    private String newName;
+    private BigDecimal newPreis;
+    private BigDecimal newAnzahl;
+    private Kategorie newKategorie;
+    private Verfuegbarkeit newVerfuegbarkeit;
 }

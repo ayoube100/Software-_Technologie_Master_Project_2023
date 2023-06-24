@@ -1,5 +1,6 @@
 package com.swt.fahrradshop.katalog.valueObject;
-public enum KategorieEnum {
+public enum Kategorie {
+
     E_BIKE,
     MTB,
     CITY_FAHRRAD,
