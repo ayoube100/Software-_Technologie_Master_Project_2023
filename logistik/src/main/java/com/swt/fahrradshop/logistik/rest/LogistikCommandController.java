@@ -43,7 +43,7 @@ public class LogistikCommandController {
         });
     }
 
-    @PutMapping("/logistik/sent/{logistikId}")
+    @PutMapping("/logistik/deliver/{logistikId}")
     public Mono<ResponseEntity<String>> sendShippingStatus(@PathVariable String logistikId){
         return Mono.fromCallable(() -> {
             SendShippingCommand cmd = SendShippingCommand.builder().logistikId(logistikId).build();
