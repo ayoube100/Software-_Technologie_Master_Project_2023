@@ -40,7 +40,9 @@ public class LogistikAggregate {
     @CommandHandler
     public void handle(CancelLogistikCommand cmd) {
 
-        apply(new LogistikCanceledEvent(cmd.getLogistikId()));
+        apply(new LogistikCanceledEvent(cmd.getLogistikId(),
+                cmd.getBestellungId(),
+                cmd.getLierfserstatusEnum()));
     }
 
     @CommandHandler
