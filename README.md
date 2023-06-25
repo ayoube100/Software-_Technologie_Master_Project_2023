@@ -70,6 +70,9 @@ _PTI09420 -Projekt Softwaretechnologie SoSe23- Westsächsische Hoschule Zwickau_
 ## Zahlung context map
 <img width="522" alt="context zahlung" src="https://media.github.fh-zwickau.de/user/96/files/98a9ee43-54c7-42ec-8bf3-aec374a351a8">
 
+## Logistik context map
+![Logistik_Context_Map](https://media.github.fh-zwickau.de/user/255/files/2341e7f1-b10e-4e0c-bf6e-8823e97597b4)
+
 ## Liste aller Commands
 
 **Bestellung microservice**
