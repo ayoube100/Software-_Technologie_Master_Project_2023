@@ -70,7 +70,59 @@ _PTI09420 -Projekt Softwaretechnologie SoSe23- Westsächsische Hoschule Zwickau_
 ## Zahlung context map
 <img width="522" alt="context zahlung" src="https://media.github.fh-zwickau.de/user/96/files/98a9ee43-54c7-42ec-8bf3-aec374a351a8">
 
+## Liste aller Commands
+
+**Bestellung microservice**
+commands -> warenkorb
+- CreateWarenkorbCommand
+- AddProduktToWarenkorbCommand
+- DeleteProduktFromWarenkorbCommand
+- OrderWarenkorbCommand
+- UnorderWarenkorbCommand
+
+queries ->warenkorb
+- FindWarenkoerbeQuery
+- FindWarenkorbByIdQuery
+
+commands -> bestellung
+- CreateBestellungCommand
+- CancelBestellungCommand
+- UpdatePayedOrSentBestellungCommand
+
+queries -> bestellung
+- FindBestellungenQuery
+- FindBestellungQuery
+
+**Zahlung microservice**
+commands:
+- ProcessZahlungCommand
+- CancelZahlungCommand
+
+queries: 
+- FindZahlungByBestellungIdQuery
+- FindZahlungByIdQuery
+
+**Logistik microservice**
+commands: 
+- CreateLogistikCommand
+- CancelLogistikCommand
+- SendShippingCommand
+
+queries: 
+- FindLogistikByIdQuery
+- FindLogistikenQuery
+
+**Katalog microservice**
+commands: 
+- CreateProduktCommand
+- UpdateProduktCommand
+- DeleteProduktCommand
+- ReservationProduktCommand
+- UnreserveProduktCommand
+
+queries:
+- FindProduktQuery
+- FindAllProduktQuery
+
 ## BestellungSaga workflow
-![Untitled-2023-06-22-2225 (2)](https://media.github.fh-zwickau.de/user/96/files/893361ca-6064-447c-bb45-582b393e740a)
-
-
+![SAGA_Workflow](https://media.github.fh-zwickau.de/user/255/files/8609c1fc-e91f-4519-88cc-e7d365188f9e)
