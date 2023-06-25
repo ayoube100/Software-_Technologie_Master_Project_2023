@@ -1,10 +1,10 @@
 package com.swt.fahrradshop.logistik.rest;
 
-import com.swt.fahrradshop.logistik.command.CancelLogistikCommand;
-import com.swt.fahrradshop.logistik.command.CreateLogistikCommand;
-import com.swt.fahrradshop.logistik.command.SendShippingCommand;
+import com.swt.fahrradshop.core.commands.CreateLogistikCommand;
+import com.swt.fahrradshop.core.commands.CancelLogistikCommand;
+import com.swt.fahrradshop.core.commands.SendShippingCommand;
 import com.swt.fahrradshop.logistik.model.LogistikCommandModel;
-import com.swt.fahrradshop.logistik.valueObject.LieferstatusEnum;
+import com.swt.fahrradshop.core.valueObject.*;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +27,8 @@ public class LogistikCommandController {
         return Mono.fromCallable(() -> {
             CreateLogistikCommand cmd = CreateLogistikCommand.builder()
                     .logistikId(UUID.randomUUID().toString())
-                    .lieferstatusEnum(LieferstatusEnum.BEARBEITET)
                     .bestellungId(logistik.getBestellungId())
+                    .lieferstatusEnum(LieferstatusEnum.BEARBEITET)
                     .build();
             commandGateway.send(cmd);
             return ResponseEntity.ok("Logistik " + logistik +" is created.");

@@ -1,6 +1,8 @@
 package com.swt.fahrradshop.aggregate;
 
+import com.swt.fahrradshop.core.commands.CancelZahlungCommand;
 import com.swt.fahrradshop.core.commands.ProcessZahlungCommand;
+import com.swt.fahrradshop.core.events.ZahlungCanceledEvent;
 import com.swt.fahrradshop.core.events.ZahlungProcessedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -13,6 +15,7 @@ import java.math.BigDecimal;
 import java.util.Random;
 
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
+import static org.axonframework.modelling.command.AggregateLifecycle.markDeleted;
 
 @Aggregate
 public class ZahlungAggregate {
@@ -52,6 +55,11 @@ public class ZahlungAggregate {
         }
     }
 
+    @CommandHandler
+    public void handle(CancelZahlungCommand cmd){
+        apply(new ZahlungCanceledEvent(cmd.getZahlungId()));
+    }
+
     @EventSourcingHandler
     public void on(ZahlungProcessedEvent evt) {
         this.zahlungId = evt.getZahlungId();
@@ -60,4 +68,11 @@ public class ZahlungAggregate {
         this.kreditKarte = evt.getKreditKarte();
         this.zahlungsstatusEnum = evt.getZahlungsstatusEnum();
     }
+
+    @EventSourcingHandler
+    public void on(ZahlungCanceledEvent evt) {
+        markDeleted();
+    }
+
+
 }

@@ -1,6 +1,8 @@
 package com.swt.fahrradshop.rest;
 
-import com.swt.fahrradshop.query.FindZahlungStatusByIdQuery;
+import com.swt.fahrradshop.core.queries.FindZahlungByBestellungIdQuery;
+import com.swt.fahrradshop.core.models.ZahlungQueryModel;
+import com.swt.fahrradshop.core.queries.FindZahlungByIdQuery;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,9 +19,15 @@ public class ZahlungQueryController {
         this.queryGateway = queryGateway;
     }
 
-    @GetMapping("/zahlung/{zahlungId}/status")
-    public Mono<String> getStatus(@PathVariable String zahlungId) {
-        FindZahlungStatusByIdQuery qry = new FindZahlungStatusByIdQuery(zahlungId);
-        return Mono.fromFuture(queryGateway.query(qry, String.class));
+    @GetMapping("/zahlung/{zahlungId}")
+    public Mono<ZahlungQueryModel> getStatus(@PathVariable String zahlungId) {
+        FindZahlungByIdQuery qry = new FindZahlungByIdQuery(zahlungId);
+        return Mono.fromFuture(queryGateway.query(qry, ZahlungQueryModel.class));
+    }
+
+    @GetMapping("/zahlung/{bestellungId}")
+    public Mono<ZahlungQueryModel> getZahungByBestellungId(@PathVariable String bestellungId) {
+        FindZahlungByBestellungIdQuery qry = new FindZahlungByBestellungIdQuery(bestellungId);
+        return Mono.fromFuture(queryGateway.query(qry, ZahlungQueryModel.class));
     }
 }

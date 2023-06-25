@@ -22,4 +22,6 @@ public class ProcessZahlungCommand {
     private BigDecimal gesamtpreis;
     private KreditKarte kreditKarte;
     private ZahlungsstatusEnum zahlungsstatusEnum;
+
+
 }

@@ -1,5 +1,7 @@
 package com.swt.fahrradshop.projection;
 
+import com.swt.fahrradshop.core.events.ZahlungCanceledEvent;
+import com.swt.fahrradshop.core.valueObject.ZahlungsstatusEnum;
 import com.swt.fahrradshop.entity.ZahlungEntity;
 import com.swt.fahrradshop.repository.ZahlungRepository;
 import com.swt.fahrradshop.core.events.ZahlungProcessedEvent;
@@ -28,4 +30,11 @@ public class ZahlungProjection {
                 )
         );
     }
+
+    @EventHandler
+    public void on(ZahlungCanceledEvent evt) {
+        zahlungRepository.deleteById(evt.getZahlungId());
+    }
+
+
 }

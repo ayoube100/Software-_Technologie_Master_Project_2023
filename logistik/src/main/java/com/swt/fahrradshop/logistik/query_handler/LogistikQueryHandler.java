@@ -1,8 +1,8 @@
 package com.swt.fahrradshop.logistik.query_handler;
 
 import com.swt.fahrradshop.logistik.entity.LogistikEntity;
-import com.swt.fahrradshop.logistik.model.LogistikQueryModel;
-import com.swt.fahrradshop.logistik.query.FindLogistikByIdQuery;
+import com.swt.fahrradshop.core.models.LogistikQueryModel;
+import com.swt.fahrradshop.core.queries.FindLogistikByIdQuery;
 import com.swt.fahrradshop.logistik.query.FindLogistikenQuery;
 import com.swt.fahrradshop.logistik.repository.LogistikRepository;
 import lombok.extern.slf4j.Slf4j;

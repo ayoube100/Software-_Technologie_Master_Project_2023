@@ -83,5 +83,15 @@ public class WarenkorbCommandController {
         });
     }
 
+    @PutMapping("/warenkorb/{warenkorbId}/unorder")
+    public Mono<ResponseEntity<String>> unorderWarenkorb(@PathVariable String warenkorbId) {
+        return Mono.fromCallable(() -> {
+            OrderWarenkorbCommand cmd = new OrderWarenkorbCommand(warenkorbId);
+            commandGateway.send(cmd);
+            return ResponseEntity.ok("warenkorb : " + warenkorbId
+                    + " is unordered!!");
+        });
+    }
+
 
 }
