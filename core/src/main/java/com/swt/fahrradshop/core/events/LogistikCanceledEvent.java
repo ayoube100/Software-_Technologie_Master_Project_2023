@@ -14,6 +14,5 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 public class LogistikCanceledEvent {
     @TargetAggregateIdentifier
     private String logistikId;
-    private String bestellungId;
-    private LieferstatusEnum lierfserstatusEnum;
+
 }

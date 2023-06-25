@@ -2,8 +2,8 @@ package com.swt.fahrradshop.katalog.rest;
 
 
 
-import com.swt.fahrradshop.katalog.command.ReservationProduktCommand;
-import com.swt.fahrradshop.katalog.command.UnreserveProduktCommand;
+import com.swt.fahrradshop.core.commands.ReserveProduktCommand;
+import com.swt.fahrradshop.core.commands.UnreserveProduktCommand;
 import com.swt.fahrradshop.katalog.dto.ProduktDto;
 import com.swt.fahrradshop.katalog.entity.Produkt;
 import com.swt.fahrradshop.katalog.service.ProduktCommandService;
@@ -48,7 +48,7 @@ public class ProduktCommandCotroller {
 
 
         @PostMapping("/katalog/reserve")
-        public ResponseEntity<String> reserveProdukt(@RequestBody ReservationProduktCommand command) {
+        public ResponseEntity<String> reserveProdukt(@RequestBody ReserveProduktCommand command) {
         produktCommand.reserveProdukt(command);
         return ResponseEntity.ok("Produkt reserved successfully");}
 

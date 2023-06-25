@@ -1,4 +1,6 @@
 package com.swt.fahrradshop.katalog.projection;
+import com.swt.fahrradshop.core.events.ProduktReservedEvent;
+import com.swt.fahrradshop.core.events.ProduktUnreservedEvent;
 import com.swt.fahrradshop.katalog.event.*;
 import com.swt.fahrradshop.katalog.entity.Produkt;
 import com.swt.fahrradshop.katalog.query.FindProduktQuery;

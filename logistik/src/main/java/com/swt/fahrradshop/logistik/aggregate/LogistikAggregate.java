@@ -40,9 +40,7 @@ public class LogistikAggregate {
     @CommandHandler
     public void handle(CancelLogistikCommand cmd) {
 
-        apply(new LogistikCanceledEvent(cmd.getLogistikId(),
-                cmd.getBestellungId(),
-                cmd.getLierfserstatusEnum()));
+        apply(new LogistikCanceledEvent(cmd.getLogistikId()));
     }
 
     @CommandHandler
@@ -63,8 +61,8 @@ public class LogistikAggregate {
     @EventSourcingHandler
     public void on(LogistikCreatedEvent evt) throws Exception {
         this.logistikId = evt.getLogistikId();
-        this.lieferstatusEnum = evt.getLieferstatus();
         this.bestellungId = evt.getBestellungId();
+        this.lieferstatusEnum = evt.getLieferstatus();
     }
 
     @EventSourcingHandler

@@ -15,6 +15,4 @@ public class CancelLogistikCommand {
     @TargetAggregateIdentifier
     private  final String logistikId;
 
-    private final String bestellungId;
-    private final LieferstatusEnum lierfserstatusEnum;
 }

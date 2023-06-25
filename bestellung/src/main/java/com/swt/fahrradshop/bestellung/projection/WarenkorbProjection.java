@@ -1,10 +1,7 @@
 package com.swt.fahrradshop.bestellung.projection;
 
 import com.swt.fahrradshop.bestellung.entity.WarenkorbEntity;
-import com.swt.fahrradshop.bestellung.event.ProduktFromWarenkorbDeletedEvent;
-import com.swt.fahrradshop.bestellung.event.ProduktToWarenkorbAddedEvent;
-import com.swt.fahrradshop.bestellung.event.WarenkorbCreatedEvent;
-import com.swt.fahrradshop.bestellung.event.WarenkorbOrderedEvent;
+import com.swt.fahrradshop.bestellung.event.*;
 import com.swt.fahrradshop.bestellung.repository.WarenkorbRepository;
 import com.swt.fahrradshop.bestellung.valueObject.WarenkorbProdukt;
 import com.swt.fahrradshop.bestellung.valueObject.WarenkorbStatusEnum;
@@ -101,6 +98,13 @@ public class WarenkorbProjection {
         } else {
             warenkorbInDb.setWarenkorbStatus(WarenkorbStatusEnum.BESTELLT.toString());
         }
+        warenkorbRepository.save(warenkorbInDb);
+    }
+
+    @EventHandler
+    public void on(WarenkorbUnorderedEvent evt) {
+        WarenkorbEntity warenkorbInDb = warenkorbRepository.findByWarenkorbId(evt.getWarenkorbId());
+        warenkorbInDb.setWarenkorbStatus(WarenkorbStatusEnum.NICHT_BESTELLT.toString());
         warenkorbRepository.save(warenkorbInDb);
     }
 }

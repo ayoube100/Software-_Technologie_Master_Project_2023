@@ -1,10 +1,10 @@
-package com.swt.fahrradshop.query;
+package com.swt.fahrradshop.core.queries;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class FindZahlungStatusByIdQuery {
+public class FindZahlungByIdQuery {
     private String zahlungId;
 }

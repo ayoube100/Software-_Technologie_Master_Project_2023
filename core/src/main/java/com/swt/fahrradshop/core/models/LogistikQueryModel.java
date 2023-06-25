@@ -1,4 +1,4 @@
-package com.swt.fahrradshop.logistik.model;
+package com.swt.fahrradshop.core.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

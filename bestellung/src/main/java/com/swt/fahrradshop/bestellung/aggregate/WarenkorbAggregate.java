@@ -1,13 +1,7 @@
 package com.swt.fahrradshop.bestellung.aggregate;
 
-import com.swt.fahrradshop.bestellung.command.AddProduktToWarenkorbCommand;
-import com.swt.fahrradshop.bestellung.command.CreateWarenkorbCommand;
-import com.swt.fahrradshop.bestellung.command.DeleteProduktFromWarenkorbCommand;
-import com.swt.fahrradshop.bestellung.command.OrderWarenkorbCommand;
-import com.swt.fahrradshop.bestellung.event.ProduktFromWarenkorbDeletedEvent;
-import com.swt.fahrradshop.bestellung.event.ProduktToWarenkorbAddedEvent;
-import com.swt.fahrradshop.bestellung.event.WarenkorbCreatedEvent;
-import com.swt.fahrradshop.bestellung.event.WarenkorbOrderedEvent;
+import com.swt.fahrradshop.bestellung.command.*;
+import com.swt.fahrradshop.bestellung.event.*;
 import com.swt.fahrradshop.bestellung.valueObject.WarenkorbProdukt;
 import com.swt.fahrradshop.bestellung.valueObject.WarenkorbStatusEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -62,6 +56,11 @@ public class WarenkorbAggregate {
         AggregateLifecycle.apply(evt);
     }
 
+    @CommandHandler
+    public void handle(UnorderWarenkorbCommand cmd) {
+        WarenkorbUnorderedEvent evt = new WarenkorbUnorderedEvent(cmd.getWarenkorbId());
+        AggregateLifecycle.apply(evt);
+    }
     @EventSourcingHandler
     private void on(WarenkorbCreatedEvent evt) {
         this.warenkorbId = evt.getWarenkorbId();
@@ -82,6 +81,10 @@ public class WarenkorbAggregate {
 
     @EventSourcingHandler
     private void on(WarenkorbOrderedEvent evt) {
+        this.warenkorbId = evt.getWarenkorbId();
+    }
+    @EventSourcingHandler
+    private void on(WarenkorbUnorderedEvent evt) {
         this.warenkorbId = evt.getWarenkorbId();
     }
 

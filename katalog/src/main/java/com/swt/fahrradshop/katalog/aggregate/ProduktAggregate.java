@@ -1,5 +1,9 @@
 package com.swt.fahrradshop.katalog.aggregate;
 
+import com.swt.fahrradshop.core.commands.ReserveProduktCommand;
+import com.swt.fahrradshop.core.commands.UnreserveProduktCommand;
+import com.swt.fahrradshop.core.events.ProduktReservedEvent;
+import com.swt.fahrradshop.core.events.ProduktUnreservedEvent;
 import com.swt.fahrradshop.katalog.command.*;
 import com.swt.fahrradshop.katalog.event.*;
 import com.swt.fahrradshop.katalog.valueObject.Verfuegbarkeit;
@@ -69,7 +73,7 @@ public class ProduktAggregate {
         AggregateLifecycle.apply(new ProduktDeletedEvent(command.getProduktId()));
     }
    @CommandHandler
-   public void handle(ReservationProduktCommand command) {
+   public void handle(ReserveProduktCommand command) {
        apply(new ProduktReservedEvent(command.getProduktId(),command.getAnzahlToReserve()));}
 
        @CommandHandler

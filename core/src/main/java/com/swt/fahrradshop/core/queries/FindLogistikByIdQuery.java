@@ -1,4 +1,4 @@
-package com.swt.fahrradshop.logistik.query;
+package com.swt.fahrradshop.core.queries;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

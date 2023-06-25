@@ -2,8 +2,7 @@ package com.swt.fahrradshop.bestellung.query_handler;
 
 import com.swt.fahrradshop.bestellung.entity.BestellungEntity;
 import com.swt.fahrradshop.bestellung.model.BestellungQueryModel;
-import com.swt.fahrradshop.bestellung.query.FindBestellungByIdQuery;
-import com.swt.fahrradshop.bestellung.query.FindBestellungenQuery;
+import com.swt.fahrradshop.bestellung.query.*;
 import com.swt.fahrradshop.bestellung.repository.BestellungRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.queryhandling.QueryHandler;
@@ -42,8 +41,8 @@ public class BestellungQueryHandler {
     }
 
     @QueryHandler
-    public BestellungQueryModel findBestellungById(FindBestellungByIdQuery qry) {
-        BestellungEntity bestellungInDB = bestellungRepository.findByBestellungId(qry.getBestellungToBeFoundId());
+    public BestellungQueryModel findBestellungB(FindBestellungQuery qry) {
+        BestellungEntity bestellungInDB = bestellungRepository.findByBestellungId(qry.getBestellungId());
         BestellungQueryModel bestellung = new BestellungQueryModel();
         BeanUtils.copyProperties(bestellungInDB, bestellung);
         return bestellung;

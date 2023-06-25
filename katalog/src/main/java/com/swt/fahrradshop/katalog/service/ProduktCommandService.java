@@ -1,5 +1,7 @@
 package com.swt.fahrradshop.katalog.service;
 
+import com.swt.fahrradshop.core.commands.ReserveProduktCommand;
+import com.swt.fahrradshop.core.commands.UnreserveProduktCommand;
 import com.swt.fahrradshop.katalog.command.*;
 import com.swt.fahrradshop.katalog.dto.ProduktDto;
 import com.swt.fahrradshop.katalog.entity.Produkt;
@@ -45,7 +47,7 @@ public class ProduktCommandService {
     public CompletableFuture<String> deleteProdukt(String produktId) {
         return commandGateway.send(new DeleteProduktCommand(produktId));
     }
-    public void reserveProdukt(ReservationProduktCommand command) {
+    public void reserveProdukt(ReserveProduktCommand command) {
         commandGateway.sendAndWait(command);
     }
     public void unsreserveProdukt(UnreserveProduktCommand command){

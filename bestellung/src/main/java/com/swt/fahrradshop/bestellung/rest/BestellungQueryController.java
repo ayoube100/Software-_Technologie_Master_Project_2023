@@ -1,7 +1,7 @@
 package com.swt.fahrradshop.bestellung.rest;
 
 import com.swt.fahrradshop.bestellung.model.BestellungQueryModel;
-import com.swt.fahrradshop.bestellung.query.FindBestellungByIdQuery;
+import com.swt.fahrradshop.bestellung.query.FindBestellungQuery;
 import com.swt.fahrradshop.bestellung.query.FindBestellungenQuery;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
@@ -32,7 +32,7 @@ public class BestellungQueryController {
 
     @GetMapping(value = "/bestellungen/{bestellungId}")
     public Mono<BestellungQueryModel> getBestellungById(@PathVariable String bestellungId) {
-        FindBestellungByIdQuery qry = new FindBestellungByIdQuery(bestellungId);
+        FindBestellungQuery qry = new FindBestellungQuery(bestellungId);
         return Mono.fromFuture(queryGateway.query(qry, BestellungQueryModel.class));
     }
 }

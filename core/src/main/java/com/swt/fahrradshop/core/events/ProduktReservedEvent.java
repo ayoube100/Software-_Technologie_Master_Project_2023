@@ -1,13 +1,12 @@
-package com.swt.fahrradshop.katalog.command;
+package com.swt.fahrradshop.core.events;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ReservationProduktCommand {
+public class ProduktReservedEvent {
     private String produktId;
     private Integer AnzahlToReserve;
 
-    
 }
