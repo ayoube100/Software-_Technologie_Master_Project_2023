@@ -73,6 +73,9 @@ _PTI09420 -Projekt Softwaretechnologie SoSe23- Westsächsische Hoschule Zwickau_
 ## Logistik context map
 ![Logistik_Context_Map](https://media.github.fh-zwickau.de/user/255/files/2341e7f1-b10e-4e0c-bf6e-8823e97597b4)
 
+## Produkt context map
+![katalog](https://media.github.fh-zwickau.de/user/255/files/e89f1785-4b51-4ec8-9ebe-9feb5aafb6b2)
+
 ## Liste aller Commands
 
 **Bestellung microservice**
