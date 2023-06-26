@@ -22,14 +22,14 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Katalog" options="-parameters" />
+      <module name="Katalog" options="" />
       <module name="api-gateway" options="-parameters" />
-      <module name="bestellung" options="-parameters" />
-      <module name="core" options="-parameters" />
-      <module name="discovery-server" options="-parameters" />
+      <module name="bestellung" options="" />
+      <module name="core" options="" />
+      <module name="discovery-server" options="" />
       <module name="katalog" options="-parameters" />
-      <module name="logistik" options="-parameters" />
-      <module name="zahlung" options="-parameters" />
+      <module name="logistik" options="" />
+      <module name="zahlung" options="" />
     </option>
   </component>
 </project>
