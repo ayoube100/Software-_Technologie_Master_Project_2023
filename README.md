@@ -42,8 +42,6 @@ _PTI09420 -Projekt Softwaretechnologie SoSe23- Westsächsische Hoschule Zwickau_
 ## Event Modelling
 ![EventModelling](https://media.github.fh-zwickau.de/user/96/files/07b5718f-6d55-43f7-ac2e-fae0fda78525)
 
-## Core Domains
-![CoreDomains](https://media.github.fh-zwickau.de/user/255/files/9f6b54ba-e152-4c5f-a50d-01fef0a2b023)
 
 ## Specification By Example - Use Cases
 
