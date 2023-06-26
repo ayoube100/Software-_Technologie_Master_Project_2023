@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,11 +42,15 @@ public class BestellungQueryHandler {
     }
 
     @QueryHandler
+    @Transactional
     public BestellungQueryModel findBestellungB(FindBestellungQuery qry) {
         BestellungEntity bestellungInDB = bestellungRepository.findByBestellungId(qry.getBestellungId());
-        BestellungQueryModel bestellung = new BestellungQueryModel();
-        BeanUtils.copyProperties(bestellungInDB, bestellung);
-        return bestellung;
+        return BestellungQueryModel.builder()
+                .bestellungId(bestellungInDB.getBestellungId())
+                .bestellungsstatus(bestellungInDB.getBestellungsstatus())
+                .kundeId(bestellungInDB.getKundeId())
+                .warenkorbId(bestellungInDB.getWarenkorbId())
+                .gesamtpreis(bestellungInDB.getGesamtpreis()).build();
     }
 
 

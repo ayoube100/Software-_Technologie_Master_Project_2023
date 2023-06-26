@@ -4,7 +4,7 @@
 POST http://localhost:9090/bestellung/create
 Content-Type: application/json
 {
-  "kundeId": "Leo77",
+  "kundeId": "--Leo--ID--",
   "warenkorbId": "ABCD",
   "gesamtpreis": 182
 }
@@ -52,3 +52,7 @@ PUT http://localhost:9090/warenkorb/--/delete/--
 ###order the Warenkorb => checkout
 ###/warenkorb/{warenkorbId}/order
 PUT http://localhost:9090/warenkorb/--/order
+
+###unorder the Warenkorb => checkout
+###/warenkorb/{warenkorbId}/order
+PUT http://localhost:9090/warenkorb/--/unorder
