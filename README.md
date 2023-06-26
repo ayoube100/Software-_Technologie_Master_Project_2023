@@ -38,8 +38,6 @@ _PTI09420 -Projekt Softwaretechnologie SoSe23- Westsächsische Hoschule Zwickau_
 #### Rechnung
 ![Rechnung_Context](https://media.github.fh-zwickau.de/user/96/files/8a37ad9f-23fd-49f3-95dc-23c389b8a5a4)    
 
-## Context Map
-![Fahrrad_Website_Context_Map](https://cdn.discordapp.com/attachments/1103682125095501866/1107645302493691914/image.png)   
 
 ## Event Modelling
 ![EventModelling](https://media.github.fh-zwickau.de/user/96/files/07b5718f-6d55-43f7-ac2e-fae0fda78525)
@@ -131,4 +129,6 @@ queries:
 - FindAllProduktQuery
 
 ## BestellungSaga workflow
+https://excalidraw.com/#json=Jy-NNb-sjufTpNMeDa9EU,Ilg4-os783eKRbVm-KSU_w
+
 ![SAGA_Workflow](https://media.github.fh-zwickau.de/user/255/files/8609c1fc-e91f-4519-88cc-e7d365188f9e)
