@@ -24,9 +24,9 @@ _PTI09420 -Projekt Softwaretechnologie SoSe23- Westsächsische Hoschule Zwickau_
 
 ![Warenkorb_Context]
 #### Produkt-Katalog
-![Image Alt Text](./images/e2e1b3ef-cfda-481f-996d-afdb02976c7a)
+![Image Alt Text](./images/e2e1b3ef-cfda-481f-996d-afdb02976c7a.png)
 #### Bestellung
-![Image Alt Text](./images/2caa352f-116d-4691-956b-0eb336212f6a)
+![Image Alt Text](./images/2caa352f-116d-4691-956b-0eb336212f6a.png)
 #### Zahlung
 ![Image Alt Text](./images/6f99c64e-3d73-40cd-acbd-4372fd7ef617)
 #### Logistik
