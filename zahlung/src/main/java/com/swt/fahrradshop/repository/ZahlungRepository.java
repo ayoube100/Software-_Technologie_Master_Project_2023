@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ZahlungRepository extends JpaRepository<ZahlungEntity, String> {
     ZahlungEntity findZahlungEntitiesByZahlungId(String zahlungId);
+
     ZahlungEntity findZahlungByBestellungId(String bestellungId);
 }
 

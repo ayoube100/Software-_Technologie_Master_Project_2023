@@ -2,7 +2,8 @@ package com.swt.fahrradshop.bestellung.query_handler;
 
 import com.swt.fahrradshop.bestellung.entity.BestellungEntity;
 import com.swt.fahrradshop.bestellung.model.BestellungQueryModel;
-import com.swt.fahrradshop.bestellung.query.*;
+import com.swt.fahrradshop.bestellung.query.FindBestellungQuery;
+import com.swt.fahrradshop.bestellung.query.FindBestellungenQuery;
 import com.swt.fahrradshop.bestellung.repository.BestellungRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.queryhandling.QueryHandler;

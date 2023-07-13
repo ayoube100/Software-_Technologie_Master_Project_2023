@@ -5,6 +5,7 @@ import com.swt.fahrradshop.katalog.valueObject.Verfuegbarkeit;
 import lombok.Value;
 
 import java.math.BigDecimal;
+
 @Value
 
 public class ProduktDto {

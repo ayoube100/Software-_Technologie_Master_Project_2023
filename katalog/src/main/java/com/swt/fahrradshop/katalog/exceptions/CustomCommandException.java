@@ -1,6 +1,6 @@
 package com.swt.fahrradshop.katalog.exceptions;
 
-public class CustomCommandException extends RuntimeException{
+public class CustomCommandException extends RuntimeException {
     public CustomCommandException(String message) {
         super(message);
     }

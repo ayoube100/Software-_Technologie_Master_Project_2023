@@ -1,9 +1,9 @@
 package com.swt.fahrradshop.logistik.projection;
 
-import com.swt.fahrradshop.logistik.entity.LogistikEntity;
 import com.swt.fahrradshop.core.events.LogistikCanceledEvent;
 import com.swt.fahrradshop.core.events.LogistikCreatedEvent;
 import com.swt.fahrradshop.core.events.ShippingSentEvent;
+import com.swt.fahrradshop.logistik.entity.LogistikEntity;
 import com.swt.fahrradshop.logistik.repository.LogistikRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.eventhandling.EventHandler;
@@ -20,7 +20,7 @@ public class LogistikProjection {
     }
 
     @EventHandler
-    public void on(LogistikCreatedEvent evt){
+    public void on(LogistikCreatedEvent evt) {
 
         LogistikEntity logistik = new LogistikEntity(
                 evt.getLogistikId(),
@@ -31,13 +31,13 @@ public class LogistikProjection {
     }
 
     @EventHandler
-    public void on(LogistikCanceledEvent evt){
+    public void on(LogistikCanceledEvent evt) {
         logistikRepository.deleteById(evt.getLogistikId());
     }
 
     @EventHandler
-    public void on(ShippingSentEvent evt){
-       LogistikEntity logistik =  logistikRepository.findByLogistikId(evt.getLogistikId());
+    public void on(ShippingSentEvent evt) {
+        LogistikEntity logistik = logistikRepository.findByLogistikId(evt.getLogistikId());
         logistik.setLieferstatus(evt.getLieferstatusEnum().toString());
     }
 

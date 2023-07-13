@@ -3,14 +3,15 @@ package com.swt.fahrradshop.logistik.valueObject;
 //TODO: import und List Produkt anpassen
 //import com.swt.fahrradshop.produkt
 
-import javax.persistence.Embeddable;
 import lombok.Data;
+
+import javax.persistence.Embeddable;
 
 @Embeddable
 @Data
 public class LagerortValueObject {
-    
-    private String lagerortId; 
+
+    private String lagerortId;
     private String standort;
-   // private List<Produkt> lagerbestand; 
+    // private List<Produkt> lagerbestand;
 }

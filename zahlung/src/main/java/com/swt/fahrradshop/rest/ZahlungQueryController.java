@@ -1,7 +1,7 @@
 package com.swt.fahrradshop.rest;
 
-import com.swt.fahrradshop.core.queries.FindZahlungByBestellungIdQuery;
 import com.swt.fahrradshop.core.models.ZahlungQueryModel;
+import com.swt.fahrradshop.core.queries.FindZahlungByBestellungIdQuery;
 import com.swt.fahrradshop.core.queries.FindZahlungByIdQuery;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.web.bind.annotation.GetMapping;

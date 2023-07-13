@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LogistikQueryModel {
 
-    private  String logistikId;
+    private String logistikId;
 
     private String lieferstatus;
     private String bestellungId;

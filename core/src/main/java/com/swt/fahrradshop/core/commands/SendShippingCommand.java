@@ -1,9 +1,10 @@
 package com.swt.fahrradshop.core.commands;
+
 import com.swt.fahrradshop.core.valueObject.LieferstatusEnum;
-import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 
 @Data

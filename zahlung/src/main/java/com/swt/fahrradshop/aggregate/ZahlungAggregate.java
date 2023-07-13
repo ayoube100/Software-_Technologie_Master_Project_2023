@@ -4,12 +4,12 @@ import com.swt.fahrradshop.core.commands.CancelZahlungCommand;
 import com.swt.fahrradshop.core.commands.ProcessZahlungCommand;
 import com.swt.fahrradshop.core.events.ZahlungCanceledEvent;
 import com.swt.fahrradshop.core.events.ZahlungProcessedEvent;
+import com.swt.fahrradshop.core.valueObject.KreditKarte;
+import com.swt.fahrradshop.core.valueObject.ZahlungsstatusEnum;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
-import com.swt.fahrradshop.core.valueObject.KreditKarte;
-import com.swt.fahrradshop.core.valueObject.ZahlungsstatusEnum;
 
 import java.math.BigDecimal;
 import java.util.Random;
@@ -56,7 +56,7 @@ public class ZahlungAggregate {
     }
 
     @CommandHandler
-    public void handle(CancelZahlungCommand cmd){
+    public void handle(CancelZahlungCommand cmd) {
         apply(new ZahlungCanceledEvent(cmd.getZahlungId()));
     }
 

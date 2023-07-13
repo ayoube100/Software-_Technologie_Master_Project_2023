@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Entity
-@Table(name="PRODUKTE")
+@Table(name = "PRODUKTE")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,10 +31,8 @@ public class Produkt {
     @Column(name = "VERFUEGBARKEIT")
     @Enumerated(EnumType.STRING)
     private Verfuegbarkeit Verfuegbarkeit;
-    @Column (name ="ANZAHL_TO_RESERVE")
+    @Column(name = "ANZAHL_TO_RESERVE")
     private BigDecimal AnzahlToReserve;
-
-
 
 
 }

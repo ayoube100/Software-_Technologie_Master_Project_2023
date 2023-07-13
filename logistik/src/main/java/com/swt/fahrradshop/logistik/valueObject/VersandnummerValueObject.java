@@ -1,7 +1,8 @@
 package com.swt.fahrradshop.logistik.valueObject;
 
-import javax.persistence.Embeddable;
 import lombok.Data;
+
+import javax.persistence.Embeddable;
 
 @Embeddable
 @Data

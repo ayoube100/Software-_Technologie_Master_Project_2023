@@ -61,6 +61,7 @@ public class WarenkorbAggregate {
         WarenkorbUnorderedEvent evt = new WarenkorbUnorderedEvent(cmd.getWarenkorbId());
         AggregateLifecycle.apply(evt);
     }
+
     @EventSourcingHandler
     private void on(WarenkorbCreatedEvent evt) {
         this.warenkorbId = evt.getWarenkorbId();
@@ -83,6 +84,7 @@ public class WarenkorbAggregate {
     private void on(WarenkorbOrderedEvent evt) {
         this.warenkorbId = evt.getWarenkorbId();
     }
+
     @EventSourcingHandler
     private void on(WarenkorbUnorderedEvent evt) {
         this.warenkorbId = evt.getWarenkorbId();

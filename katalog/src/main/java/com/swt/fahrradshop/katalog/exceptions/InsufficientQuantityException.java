@@ -3,7 +3,7 @@ package com.swt.fahrradshop.katalog.exceptions;
 import lombok.Data;
 
 @Data
-public class InsufficientQuantityException extends RuntimeException{
+public class InsufficientQuantityException extends RuntimeException {
     public InsufficientQuantityException(String message) {
         super(message);
     }

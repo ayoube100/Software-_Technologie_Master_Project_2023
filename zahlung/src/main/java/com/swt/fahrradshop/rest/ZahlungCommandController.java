@@ -3,14 +3,13 @@ package com.swt.fahrradshop.rest;
 
 import com.swt.fahrradshop.core.commands.CancelZahlungCommand;
 import com.swt.fahrradshop.core.commands.ProcessZahlungCommand;
+import com.swt.fahrradshop.core.valueObject.ZahlungsstatusEnum;
 import com.swt.fahrradshop.model.ZahlungCommandModel;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-import com.swt.fahrradshop.core.valueObject.ZahlungsstatusEnum;
 
-import javax.ws.rs.PathParam;
 import java.util.UUID;
 
 @RestController
@@ -44,7 +43,7 @@ public class ZahlungCommandController {
     @DeleteMapping("/zahlung/cancel/{zahlungId}")
     public Mono<ResponseEntity<String>> cancelZahlung(@PathVariable String zahlungId) {
         return Mono.fromCallable(() -> {
-            CancelZahlungCommand cmd =  CancelZahlungCommand.builder()
+            CancelZahlungCommand cmd = CancelZahlungCommand.builder()
                     .zahlungId(zahlungId).build();
             commandGateway.send(cmd);
             return ResponseEntity.ok("Zahlung " +

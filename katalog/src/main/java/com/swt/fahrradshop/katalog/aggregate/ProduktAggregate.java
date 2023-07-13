@@ -4,8 +4,13 @@ import com.swt.fahrradshop.core.commands.ReserveProduktCommand;
 import com.swt.fahrradshop.core.commands.UnreserveProduktCommand;
 import com.swt.fahrradshop.core.events.ProduktReservedEvent;
 import com.swt.fahrradshop.core.events.ProduktUnreservedEvent;
-import com.swt.fahrradshop.katalog.command.*;
-import com.swt.fahrradshop.katalog.event.*;
+import com.swt.fahrradshop.katalog.command.CreateProduktCommand;
+import com.swt.fahrradshop.katalog.command.DeleteProduktCommand;
+import com.swt.fahrradshop.katalog.command.UpdateProduktCommand;
+import com.swt.fahrradshop.katalog.event.ProduktCreatedEvent;
+import com.swt.fahrradshop.katalog.event.ProduktDeletedEvent;
+import com.swt.fahrradshop.katalog.event.ProduktUpdatedEvent;
+import com.swt.fahrradshop.katalog.valueObject.Kategorie;
 import com.swt.fahrradshop.katalog.valueObject.Verfuegbarkeit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,8 +20,9 @@ import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
-import com.swt.fahrradshop.katalog.valueObject.Kategorie;
+
 import java.math.BigDecimal;
+
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 import static org.axonframework.modelling.command.AggregateLifecycle.markDeleted;
 
@@ -37,7 +43,7 @@ public class ProduktAggregate {
 
 
     @CommandHandler
-    public ProduktAggregate(CreateProduktCommand command){
+    public ProduktAggregate(CreateProduktCommand command) {
         // this is an Axon annotation used to notify the ProduktAggregate that a new Produkt was creating by publishing a ProduktCreatedEvent
         AggregateLifecycle.apply(
                 new ProduktCreatedEvent(
@@ -53,18 +59,19 @@ public class ProduktAggregate {
         );
 
     }
-    @CommandHandler
-    public void handle(UpdateProduktCommand command){
 
-                      //this is an Axon annotation used to apply the event to the ProduktAggregate
-                      AggregateLifecycle.apply(new ProduktUpdatedEvent(
-                              command.getProduktId(),
-                              command.getNewName(),
-                              command.getNewPreis(),
-                              command.getNewAnzahl(),
-                              command.getNewKategorie(),
-                              command.getNewVerfuegbarkeit(),
-                              command.getNewAnzahlToReserve()));
+    @CommandHandler
+    public void handle(UpdateProduktCommand command) {
+
+        //this is an Axon annotation used to apply the event to the ProduktAggregate
+        AggregateLifecycle.apply(new ProduktUpdatedEvent(
+                command.getProduktId(),
+                command.getNewName(),
+                command.getNewPreis(),
+                command.getNewAnzahl(),
+                command.getNewKategorie(),
+                command.getNewVerfuegbarkeit(),
+                command.getNewAnzahlToReserve()));
 
     }
 
@@ -72,56 +79,62 @@ public class ProduktAggregate {
     public void handle(DeleteProduktCommand command) {
         AggregateLifecycle.apply(new ProduktDeletedEvent(command.getProduktId()));
     }
-   @CommandHandler
-   public void handle(ReserveProduktCommand command) {
-       apply(new ProduktReservedEvent(command.getProduktId(),command.getAnzahlToReserve()));}
 
-       @CommandHandler
-       public void handle(UnreserveProduktCommand command){
-           apply (new ProduktUnreservedEvent(command.getProduktId(),command.getAnzahlToReserve()));
+    @CommandHandler
+    public void handle(ReserveProduktCommand command) {
+        apply(new ProduktReservedEvent(command.getProduktId(), command.getAnzahlToReserve()));
+    }
 
-       }
+    @CommandHandler
+    public void handle(UnreserveProduktCommand command) {
+        apply(new ProduktUnreservedEvent(command.getProduktId(), command.getAnzahlToReserve()));
 
-@EventSourcingHandler
-    public void on(ProduktCreatedEvent event){
+    }
+
+    @EventSourcingHandler
+    public void on(ProduktCreatedEvent event) {
 
         this.produktId = event.getProduktId();
         this.Name = event.getName();
         this.Preis = event.getPreis();
-        this.Anzahl=event.getAnzahl();
-        this.Kategorie=event.getKategorie();
-        this.Verfuegbarkeit=event.getVerfuegbarkeit();
-        this.AnzahlToReserve=event.getAnzahlToReserve();
+        this.Anzahl = event.getAnzahl();
+        this.Kategorie = event.getKategorie();
+        this.Verfuegbarkeit = event.getVerfuegbarkeit();
+        this.AnzahlToReserve = event.getAnzahlToReserve();
 
     }
+
     @EventSourcingHandler
-    public void on(ProduktUpdatedEvent event){
+    public void on(ProduktUpdatedEvent event) {
 
         this.produktId = event.getProduktId();
         this.Name = event.getNewName();
-        this.Preis= event.getNewPreis();
-        this.Anzahl=event.getNewAnzahl();
-        this.Kategorie=event.getNewKategorie();
-        this.Verfuegbarkeit=event.getNewVerfuegbarkeit();
-        this.AnzahlToReserve=event.getNewAnzahl();
+        this.Preis = event.getNewPreis();
+        this.Anzahl = event.getNewAnzahl();
+        this.Kategorie = event.getNewKategorie();
+        this.Verfuegbarkeit = event.getNewVerfuegbarkeit();
+        this.AnzahlToReserve = event.getNewAnzahl();
     }
+
     @EventSourcingHandler
     public void on(ProduktDeletedEvent event) {
-       markDeleted();
+        markDeleted();
     }
-   @EventSourcingHandler
+
+    @EventSourcingHandler
     public void on(ProduktReservedEvent event) {
-        this.produktId=event.getProduktId();
-        this.AnzahlToReserve=BigDecimal.valueOf(event.getAnzahlToReserve());
-
-      }
-      @EventSourcingHandler
-public void on (ProduktUnreservedEvent event){
-    this.produktId=event.getProduktId();
-
-      }
+        this.produktId = event.getProduktId();
+        this.AnzahlToReserve = BigDecimal.valueOf(event.getAnzahlToReserve());
 
     }
+
+    @EventSourcingHandler
+    public void on(ProduktUnreservedEvent event) {
+        this.produktId = event.getProduktId();
+
+    }
+
+}
 
 
 

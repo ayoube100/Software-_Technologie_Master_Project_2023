@@ -1,10 +1,12 @@
 package com.swt.fahrradshop.logistik.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
-import javax.persistence.*;
-
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 @Data
@@ -16,9 +18,9 @@ import javax.persistence.*;
 public class LogistikEntity {
     @Id
     private String logistikId;
-    
+
     private String bestellungId;
     private String lieferstatus;
-    
-    
+
+
 }

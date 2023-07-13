@@ -1,9 +1,9 @@
 package com.swt.fahrradshop.entity;
 
+import com.swt.fahrradshop.core.valueObject.KreditKarte;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.swt.fahrradshop.core.valueObject.KreditKarte;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;

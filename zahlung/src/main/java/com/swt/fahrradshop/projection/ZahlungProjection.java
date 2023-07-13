@@ -1,10 +1,9 @@
 package com.swt.fahrradshop.projection;
 
 import com.swt.fahrradshop.core.events.ZahlungCanceledEvent;
-import com.swt.fahrradshop.core.valueObject.ZahlungsstatusEnum;
+import com.swt.fahrradshop.core.events.ZahlungProcessedEvent;
 import com.swt.fahrradshop.entity.ZahlungEntity;
 import com.swt.fahrradshop.repository.ZahlungRepository;
-import com.swt.fahrradshop.core.events.ZahlungProcessedEvent;
 import org.axonframework.eventhandling.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

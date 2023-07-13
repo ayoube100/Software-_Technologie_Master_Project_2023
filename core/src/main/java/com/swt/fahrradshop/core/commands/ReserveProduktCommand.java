@@ -9,5 +9,5 @@ public class ReserveProduktCommand {
     private String produktId;
     private Integer AnzahlToReserve;
 
-    
+
 }

@@ -1,8 +1,8 @@
 package com.swt.fahrradshop.core.models;
 
+import com.swt.fahrradshop.core.valueObject.KreditKarte;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import com.swt.fahrradshop.core.valueObject.KreditKarte;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;

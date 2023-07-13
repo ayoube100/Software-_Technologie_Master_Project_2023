@@ -9,11 +9,11 @@ import com.swt.fahrradshop.bestellung.event.BestellungCreatedEvent;
 import com.swt.fahrradshop.bestellung.event.WarenkorbOrderedEvent;
 import com.swt.fahrradshop.bestellung.model.BestellungQueryModel;
 import com.swt.fahrradshop.bestellung.model.WarenkorbQueryModel;
+import com.swt.fahrradshop.bestellung.query.FindBestellungQuery;
 import com.swt.fahrradshop.bestellung.query.FindWarenkorbByIdQuery;
 import com.swt.fahrradshop.bestellung.valueObject.BestellungsstatusEnum;
 import com.swt.fahrradshop.bestellung.valueObject.WarenkorbProdukt;
 import com.swt.fahrradshop.core.commands.*;
-import com.swt.fahrradshop.bestellung.query.*;
 import com.swt.fahrradshop.core.events.*;
 import com.swt.fahrradshop.core.models.LogistikQueryModel;
 import com.swt.fahrradshop.core.models.ZahlungQueryModel;
@@ -33,6 +33,7 @@ import org.axonframework.modelling.saga.StartSaga;
 import org.axonframework.queryhandling.QueryGateway;
 import org.axonframework.spring.stereotype.Saga;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class BestellungSaga {
     WarenkorbQueryModel warenkorb = null;
     LogistikQueryModel logistik = null;
     ZahlungQueryModel zahlung = null;
-    BestellungQueryModel bestellung =null;
+    BestellungQueryModel bestellung = null;
 
     /**
      * The logic here:
@@ -203,7 +204,7 @@ public class BestellungSaga {
                 bestellungCreatedEvent.getBestellungId(),
                 processZahlungCommand.getZahlungId());
 
-                commandGateway.send(processZahlungCommand, (commandResult, throwable) -> {
+        commandGateway.send(processZahlungCommand, (commandResult, throwable) -> {
             if (throwable.isExceptional()) { // to access if statement ->  put if(throwable =! null)-> cancelBestellungCommand
                 //-----------compensating action
                 log.info("Error while processing zahlung {}", processZahlungCommand.getZahlungId());
@@ -265,38 +266,37 @@ public class BestellungSaga {
         }
     }
 
-  @SagaEventHandler(associationProperty = "bestellungId")
-    public void handle(LogistikCreatedEvent logistikCreatedEvent){
+    @SagaEventHandler(associationProperty = "bestellungId")
+    public void handle(LogistikCreatedEvent logistikCreatedEvent) {
         SendShippingCommand sendShippingCommand = new SendShippingCommand(
                 logistikCreatedEvent.getLogistikId(),
                 logistikCreatedEvent.getBestellungId(),
                 logistikCreatedEvent.getLieferstatus()
         );
-      SagaLifecycle.associateWith("logistikId", sendShippingCommand.getLogistikId());
+        SagaLifecycle.associateWith("logistikId", sendShippingCommand.getLogistikId());
 
-      log.info("***sendShippingCommand being handled for bestellungId: {} and logistikId: {} ***",
-              logistikCreatedEvent.getBestellungId(),
-              logistikCreatedEvent.getLogistikId());
+        log.info("***sendShippingCommand being handled for bestellungId: {} and logistikId: {} ***",
+                logistikCreatedEvent.getBestellungId(),
+                logistikCreatedEvent.getLogistikId());
         commandGateway.send(sendShippingCommand, ((commandMessage, throwable) -> {
-            if(throwable.isExceptional()){
-                log.info("Stock issues with the shippment {}. It will be canceled.",logistikCreatedEvent.getLogistikId());
+            if (throwable.isExceptional()) {
+                log.info("Stock issues with the shippment {}. It will be canceled.", logistikCreatedEvent.getLogistikId());
                 CancelLogistikCommand cancelLogistikCommand = new CancelLogistikCommand(logistikCreatedEvent.getLogistikId());
                 commandGateway.send(cancelLogistikCommand);
-            }
-            else{
+            } else {
                 //mark it sent
-                log.info("Shipping {} for the bestellung {} is on its way.",sendShippingCommand.getLogistikId(),
+                log.info("Shipping {} for the bestellung {} is on its way.", sendShippingCommand.getLogistikId(),
                         sendShippingCommand.getBestellungId());
             }
         }));
     }
 
     @SagaEventHandler(associationProperty = "logistikId")
-    public void handle(LogistikCanceledEvent logistikCanceledEvent){
+    public void handle(LogistikCanceledEvent logistikCanceledEvent) {
         //need the bestellung id
         FindLogistikByIdQuery findLogistikByIdQuery = new FindLogistikByIdQuery(logistikCanceledEvent.getLogistikId());
         try {
-             logistik = queryGateway.query(findLogistikByIdQuery,
+            logistik = queryGateway.query(findLogistikByIdQuery,
                     ResponseTypes.instanceOf(LogistikQueryModel.class)).join();
             log.info("getting logistik : {}  from DB was successful", logistikCanceledEvent.getLogistikId());
 
@@ -326,7 +326,7 @@ public class BestellungSaga {
     }
 
     @SagaEventHandler(associationProperty = "zahlungId")
-    public void handle(ZahlungCanceledEvent zahlungCanceledEvent){
+    public void handle(ZahlungCanceledEvent zahlungCanceledEvent) {
 
         //get the bestellung Id
         //need the zahlung id to cancel it
@@ -352,17 +352,17 @@ public class BestellungSaga {
     //-------------Happy ending :)
     @EndSaga
     @SagaEventHandler(associationProperty = "bestellungId")
-    public void handle(ShippingSentEvent shippingSentEvent){
+    public void handle(ShippingSentEvent shippingSentEvent) {
         //update status of bestellung to ABGESCHLOSSEN
         UpdatePayedOrSentBestellungCommand sentBestellungCommand = new UpdatePayedOrSentBestellungCommand(shippingSentEvent.getBestellungId());
         commandGateway.send(sentBestellungCommand);
-        log.info("++++++++Saga successfully finished for {}+++++++",shippingSentEvent.getBestellungId());
+        log.info("++++++++Saga successfully finished for {}+++++++", shippingSentEvent.getBestellungId());
     }
 
     //-------------Sad ending :)
     @EndSaga
-    @SagaEventHandler(associationProperty="bestellungId")
-    public void handle(BestellungCanceledEvent bestellungCanceledEvent){
+    @SagaEventHandler(associationProperty = "bestellungId")
+    public void handle(BestellungCanceledEvent bestellungCanceledEvent) {
 
         //get bestellung
         FindBestellungQuery findBestellungQuery = new FindBestellungQuery(bestellungCanceledEvent.getBestellungId());
@@ -382,5 +382,7 @@ public class BestellungSaga {
         log.info("Bestellung Saga aborted for Warenkorb {}: ", unorderWarenkorbCommand.getWarenkorbId());
     }
 
-
+    //public static void main(String[] args) {
+      //  SpringApplication.run(DiscoveryServerApplication.class, args);
+    //}
 }
