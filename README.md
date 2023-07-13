@@ -16,8 +16,9 @@ _PTI09420 -Projekt Softwaretechnologie SoSe23- Westsächsische Hoschule Zwickau_
 - Aggregates
 - Specification By Example - Use Cases
 
-## Domain Storytelling 
-![Domain Storytelling für Fahrrad-Website - Meilenstein 1](https://media.github.fh-zwickau.de/user/96/files/a56772d6-8514-47c9-b0b8-c48e59e21c39)
+## Domain Storytelling
+
+![Domain Storytelling für Fahrrad-Website - Meilenstein 1](C:\Users\Ayoub\Desktop\CQRS\a56772d6-8514-47c9-b0b8-c48e59e21c39.png)
 
 ## Event Storming mit Bounded Context
 
