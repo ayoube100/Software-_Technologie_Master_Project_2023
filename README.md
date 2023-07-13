@@ -18,7 +18,7 @@ _PTI09420 -Projekt Softwaretechnologie SoSe23- Westsächsische Hoschule Zwickau_
 
 ## Domain Storytelling
 
-![Image Alt Text](./images\a56772d6-8514-47c9-b0b8-c48e59e21c39.png)
+![Image Alt Text](./images/a56772d6-8514-47c9-b0b8-c48e59e21c39.png)
 
 ## Event Storming mit Bounded Context
 
