@@ -23,7 +23,7 @@ _PTI09420 -Projekt Softwaretechnologie SoSe23- Westsächsische Hoschule Zwickau_
 ## Event Storming mit Bounded Context
 
 #### Warenkorb
-![Warenkorb_Context](https://media.github.fh-zwickau.de/user/96/files/96a25675-e2ab-4d67-9b53-c3871bab2091)
+![Warenkorb_Context](https://media.github.fh-zwickau.de/user/96/files/96a25675-e2ab-4d67-9b53-c3871bab2091.png)
 #### Produkt-Katalog
 ![Podukt-Katalog_Context](https://media.github.fh-zwickau.de/user/96/files/e2e1b3ef-cfda-481f-996d-afdb02976c7a)
 #### Bestellung
